@@ -237,7 +237,8 @@ class ContrastiveModel(nn.Module):
                 q_knn.view(q_knn.size(0), -1),
                 self.knn_mem.memory.view(self.knn_mem.memory.size(0), -1),
             )
-            yd, yi = dist.topk(knn_k, dim=1, largest=True, sorted=True)
+            # TODO: double check here
+            yd, yi = dist.topk(min(dist.shape[1], knn_k), dim=1, largest=True, sorted=True)
         return yd, yi
 
     def sim_loss(self, q, k):
