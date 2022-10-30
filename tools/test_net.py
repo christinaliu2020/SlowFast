@@ -282,3 +282,63 @@ def test(cfg):
         logger.info("{}".format(result_string))
     logger.info("{}".format(result_string_views))
     return result_string + " \n " + result_string_views
+
+@torch.no_grad()
+def extract_features_for_video(cfg, model, video_loader, video_idx, num_videos):
+    """
+    Extract features for a single video.
+    Args:
+        cfg (CfgNode): configs. Details can be found in
+            slowfast/config/defaults.py
+        model (nn.Module): model to be tested.
+        video_loader (DataLoader): video loader.
+        video_idx (int): index of the video.
+        num_videos (int): total number of videos.
+    Returns:
+        list: list of features for the video.
+    """
+    # Perform the forward pass.
+    model.eval()
+    features = []
+    for cur_iter, (inputs, _, _, _) in enumerate(video_loader):
+        inputs = inputs.cuda(non_blocking=True)
+        if cfg.DETECTION.ENABLE:
+            inputs = inputs.view(
+                inputs.size(0) * inputs.size(1),
+                inputs.size(2),
+                inputs.size(3),
+                inputs.size(4),
+            )
+        # Compute the predictions.
+        preds = model(inputs)
+        if cfg.DETECTION.ENABLE:
+            preds = preds.view(
+                cfg.TEST.BATCH_SIZE, cfg.DETECTION.NUM_FRAMES, -1
+            )
+        # Append the predictions.
+        features.append(preds.cpu())
+        # Log the testing progress.
+        if cur_iter % cfg.LOG_PERIOD == 0:
+            misc.log_iter_stats(
+                "test",
+                cur_iter,
+                len(video_loader),
+                {"top1_acc": 0.0, "top5_acc": 0.0},
+                video_idx,
+                num_videos,
+            )
+    # Concatenate the predictions.
+    features = torch.cat(features, dim=0)
+    return features
+
+if __name__ == "__main__":
+
+
+    # Load the config file.
+    cfg = load_config()
+
+    np.random.seed(cfg.RNG_SEED)
+    torch.manual_seed(cfg.RNG_SEED)
+
+    # load model from checkpoint
+    model = build_model(cfg)
