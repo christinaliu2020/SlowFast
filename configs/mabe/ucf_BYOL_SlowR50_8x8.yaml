@@ -2,11 +2,11 @@ TASK: ssl
 TRAIN:
   DATASET: kinetics
   EVAL_PERIOD: 1
-  CHECKPOINT_PERIOD: 5
+  CHECKPOINT_PERIOD: 10
   AUTO_RESUME: True
   BATCH_SIZE: 6
 MODEL:
-  NUM_CLASSES: 256
+  NUM_CLASSES: 101
   MODEL_NAME: ContrastiveModel
   ARCH: slow_c2d
   ARCH: slow
@@ -15,7 +15,7 @@ MODEL:
   HEAD_ACT: none
 CONTRASTIVE:
   T: 0.5
-  DIM: 256 # 128 default, if changed, change nCls too
+  DIM: 101 # 128 default, if changed, change nCls too
   NUM_MLP_LAYERS: 2 # default 1
   BN_MLP: True
   BN_SYNC_MLP: True
@@ -48,6 +48,7 @@ DATA:
   PATH_TO_DATA_DIR: /home/markus/PycharmProjects/SlowFast/data/ucf/
   PATH_PREFIX: /home/markus/PycharmProjects/SlowFast/data/ucf/
   DECODING_SHORT_SIZE: 256
+  DECODING_BACKEND: pyav
 BN:
   USE_PRECISE_STATS: False
   NUM_BATCHES_PRECISE: 200
