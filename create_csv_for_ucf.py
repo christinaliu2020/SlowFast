@@ -5,7 +5,7 @@ import os
 
 # path to videos
 # PATH_to_txt_files = "./data/ucfTrainTestlist/classInd.txt"
-root_path = "./root/"
+root_path = "/root/"
 PATH_to_annotations = root_path + "ucfTrainTestlist/"
 PATH_to_videos = root_path + "UCF-101/"
 PATH_to_txt_files = root_path + "ucfTrainTestlist/classInd.txt"
