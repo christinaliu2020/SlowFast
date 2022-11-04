@@ -45,8 +45,10 @@ DATA:
   TEST_CROP_SIZE: 256
   INPUT_CHANNEL_NUM: [3]
   PATH_LABEL_SEPARATOR: " "
-  PATH_TO_DATA_DIR: /home/markus/PycharmProjects/SlowFast/data/ucf/
-  PATH_PREFIX: /home/markus/PycharmProjects/SlowFast/data/ucf/
+#  PATH_TO_DATA_DIR: /home/markus/PycharmProjects/SlowFast/data/ucf/
+#  PATH_PREFIX: /home/markus/PycharmProjects/SlowFast/data/ucf/
+  PATH_TO_DATA_DIR: /root/UCF-101/
+  PATH_PREFIX: /root/UCF-101/
   DECODING_SHORT_SIZE: 256
   DECODING_BACKEND: pyav
 BN:
@@ -78,6 +80,6 @@ DATA_LOADER:
   PIN_MEMORY: True
 NUM_GPUS: 1
 RNG_SEED: 0
-OUTPUT_DIR: /home/markus/Desktop/contrastive-ssl/ucf
+OUTPUT_DIR: /root/ucf_results/byol_slow_r50_8x8
 DETECTION:
   ENABLE: False
