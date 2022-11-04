@@ -9,7 +9,7 @@ TRAIN:
   AUTO_RESUME: True
   MIXED_PRECISION: False
   CHECKPOINT_FILE_PATH: /root/pretrained_models/k400_MVIT_S_MaskFeat_PT_epoch_00300.pyth
-  CHECKPOINT_TYPE: caffe2
+#  CHECKPOINT_TYPE: caffe2
 DATA:
   USE_OFFSET_SAMPLING: True
   DECODING_BACKEND: torchvision
