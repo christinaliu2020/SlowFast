@@ -10,7 +10,7 @@ TRAIN:
   CHECKPOINT_EPOCH_RESET: True
 #  CHECKPOINT_FILE_PATH: /home/markus/PycharmProjects/SlowFast/pretrained_models/SLOWONLY_8x8_R50.pkl
   CHECKPOINT_FILE_PATH: /root/pretrained_models/BYOL_SlowR50_8x8_T2_epoch_00200.pyth
-  CHECKPOINT_TYPE: caffe2
+#  CHECKPOINT_TYPE: caffe2
 DATA:
   NUM_FRAMES: 8
   SAMPLING_RATE: 8
