@@ -112,7 +112,7 @@ def is_checkpoint_epoch(cfg, cur_epoch, multigrid_schedule=None):
     return (cur_epoch + 1) % cfg.TRAIN.CHECKPOINT_PERIOD == 0
 
 
-def save_checkpoint(path_to_job, model, optimizer, epoch, cfg, scaler=None):
+def save_checkpoint(path_to_job, model, optimizer, epoch, cfg, scaler=None, wandb=None):
     """
     Save a checkpoint.
     Args:
@@ -146,6 +146,8 @@ def save_checkpoint(path_to_job, model, optimizer, epoch, cfg, scaler=None):
     )
     with pathmgr.open(path_to_checkpoint, "wb") as f:
         torch.save(checkpoint, f)
+        if wandb is not None:
+            wandb.save(path_to_checkpoint)
     return path_to_checkpoint
 
 
