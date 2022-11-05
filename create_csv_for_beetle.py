@@ -19,13 +19,13 @@ all_files = [f for f in all_files if f.endswith(".mp4")]
 # resulting entries
 train = []
 for f in all_files:
-    train.append([str(f) + '0'])
+    train.append([f, 0])
 
 # to csv file
 df = pd.DataFrame(train, columns=["video", "label"], index=None)
-df.to_csv(PATH_to_train, index=False, header=False)
-df.to_csv(PATH_to_test, index=False, header=False)
-df.to_csv(PATH_to_val, index=False, header=False)
+df.to_csv(PATH_to_train, index=False, header=False, sep=" ")
+df.to_csv(PATH_to_test, index=False, header=False, sep=" ")
+df.to_csv(PATH_to_val, index=False, header=False, sep=" ")
 
 # get classInd
 classInd = {"rnd0": 0}
