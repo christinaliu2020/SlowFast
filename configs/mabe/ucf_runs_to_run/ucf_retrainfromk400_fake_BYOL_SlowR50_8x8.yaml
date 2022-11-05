@@ -5,6 +5,9 @@ TRAIN:
   CHECKPOINT_PERIOD: 10
   AUTO_RESUME: True
   BATCH_SIZE: 64
+  CHECKPOINT_FILE_PATH: /root/pretrained_models/BYOL_SlowR50_8x8_T2_epoch_00200.pyth
+  CHECKPOINT_EPOCH_RESET: True
+  CHECKPOINT_CLEAR_NAME_PATTERN: ("backbone.",)
 #  BATCH_SIZE: 6
 MODEL:
   NUM_CLASSES: 101
@@ -85,7 +88,7 @@ DATA_LOADER:
 #NUM_GPUS: 1
 NUM_GPUS: 8
 RNG_SEED: 0
-OUTPUT_DIR: /root/ucf_results/byol_slow_r50_8x8_fakeLabels
+OUTPUT_DIR: /root/ucf_results/byol_slow_r50_8x8_fakeLabels_fromk400
 #OUTPUT_DIR: /home/markus/Desktop/contrastive-ssl/ucf
 DETECTION:
   ENABLE: False
