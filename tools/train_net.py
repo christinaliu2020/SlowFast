@@ -531,7 +531,7 @@ def train(cfg):
     np.random.seed(cfg.RNG_SEED)
     torch.manual_seed(cfg.RNG_SEED)
     wandb.init(
-        project="mabe_log_test",
+        project="Mabe_submission_runs",
         entity="maggu",
         # settings=wandb.Settings(start_method="thread"),
         # save_code=True,
