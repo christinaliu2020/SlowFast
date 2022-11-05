@@ -85,7 +85,7 @@ TEST:
   NUM_SPATIAL_CROPS: 3
 #  NUM_TEMPORAL_CLIPS: [5, 7, 10]
   NUM_TEMPORAL_CLIPS: [5]
-  CHECKPOINT_FILE_PATH: /root/ucf_results/MAE_pretrained/checkpoints/ssl_checkpoint_epoch_00050.pyth
+  CHECKPOINT_FILE_PATH: /root/ucf_results/MAE_pretrained/checkpoints/ssl_eval_checkpoint_epoch_00050.pyth
 DATA_LOADER:
   NUM_WORKERS: 8
   PIN_MEMORY: True

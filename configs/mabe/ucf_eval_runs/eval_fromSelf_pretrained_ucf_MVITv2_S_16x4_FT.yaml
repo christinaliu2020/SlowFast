@@ -97,7 +97,7 @@ TEST:
   NUM_SPATIAL_CROPS: 1
 #  NUM_TEMPORAL_CLIPS: [1, 3, 4, 5, 7, 10]
   NUM_TEMPORAL_CLIPS: [3]
-  CHECKPOINT_FILE_PATH: /root/ucf_results/maskmvit_pretrained/checkpoints/ssl_checkpoint_epoch_00050.pyth
+  CHECKPOINT_FILE_PATH: /root/ucf_results/maskmvit_pretrained/checkpoints/ssl_eval_checkpoint_epoch_00050.pyth
 DATA_LOADER:
   NUM_WORKERS: 8
   PIN_MEMORY: True
