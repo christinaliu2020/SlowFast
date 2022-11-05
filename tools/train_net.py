@@ -28,6 +28,7 @@ from slowfast.utils.meters import AVAMeter, EpochTimer, TrainMeter, ValMeter
 from slowfast.utils.multigrid import MultigridSchedule
 
 logger = logging.get_logger(__name__)
+import wandb
 
 
 def train_epoch(
@@ -269,6 +270,11 @@ def train_epoch(
                     },
                     global_step=data_size * cur_epoch + cur_iter,
                 )
+            wandb.log({"Train/loss": loss}, step=data_size * cur_epoch + cur_iter)
+            wandb.log({"Train/lr": lr}, step=data_size * cur_epoch + cur_iter)
+            wandb.log({"Train/Top1_err": top1_err}, step=data_size * cur_epoch + cur_iter)
+            wandb.log({"Train/Top5_err": top5_err}, step=data_size * cur_epoch + cur_iter)
+
         train_meter.iter_toc()  # do measure allreduce for this meter
         train_meter.log_iter_stats(cur_epoch, cur_iter)
         torch.cuda.synchronize()
@@ -285,7 +291,7 @@ def train_epoch(
 
 @torch.no_grad()
 def eval_epoch(
-    val_loader, model, val_meter, cur_epoch, cfg, train_loader, writer
+    val_loader, model, val_meter, cur_epoch, cfg, train_loader, writer, wandb
 ):
     """
     Evaluate the model on the val set.
@@ -410,6 +416,9 @@ def eval_epoch(
                         {"Val/Top1_err": top1_err, "Val/Top5_err": top5_err},
                         global_step=len(val_loader) * cur_epoch + cur_iter,
                     )
+                # logging with wandb
+                wandb.log({"Val/Top1_err": top1_err}, step=len(val_loader) * cur_epoch + cur_iter)
+                wandb.log({"Val/Top5_err": top5_err}, step=len(val_loader) * cur_epoch + cur_iter)
 
             val_meter.update_predictions(preds, labels)
 
@@ -742,6 +751,7 @@ def train(cfg):
                 cur_epoch,
                 cfg,
                 scaler if cfg.TRAIN.MIXED_PRECISION else None,
+                wandb=wandb
             )
         # Evaluate the model on validation set.
         if is_eval_epoch:
@@ -753,9 +763,10 @@ def train(cfg):
                 cfg,
                 train_loader,
                 writer,
+                wandb
             )
     if start_epoch == cfg.SOLVER.MAX_EPOCH: # eval if we loaded the final checkpoint
-        eval_epoch(val_loader, model, val_meter, start_epoch, cfg, train_loader, writer)
+        eval_epoch(val_loader, model, val_meter, start_epoch, cfg, train_loader, writer, wandb)
     if writer is not None:
         writer.close()
     result_string = (

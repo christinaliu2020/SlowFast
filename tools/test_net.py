@@ -278,6 +278,12 @@ def test(cfg):
                 flops,
             )
         )
+        wandb.log({"test": test_meter.stats["top1_acc"]})
+        wandb.log({"test": test_meter.stats["top5_acc"]})
+        wandb.log({"flow": flops})
+        wandb.log({"params": params / 1e6})
+        wandb.log({"mem": misc.gpu_mem_usage()})
+        wandb.log({"view": view})
 
         logger.info("{}".format(result_string))
     logger.info("{}".format(result_string_views))

@@ -2,6 +2,8 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 
 """Wrapper to train and test a video classification model."""
+import wandb
+
 from slowfast.config.defaults import assert_and_infer_cfg
 from slowfast.utils.misc import launch_job
 from slowfast.utils.parser import load_config, parse_args
@@ -21,6 +23,17 @@ def main():
     for path_to_config in args.cfg_files:
         cfg = load_config(args, path_to_config)
         cfg = assert_and_infer_cfg(cfg)
+
+        wandb.init(
+            project="mabe_log_test",
+            entity="maggu",
+            # settings=wandb.Settings(start_method="thread"),
+            # save_code=True,
+            config=cfg,
+            # id=args["load_from_wandb"] if args["load_from_wandb"] is not None else None,
+            name=path_to_config.split('/')[-1],
+            # resume="must" if args["load_from_wandb"] is not None else False,
+        )
 
         # Perform training.
         if cfg.TRAIN.ENABLE:
