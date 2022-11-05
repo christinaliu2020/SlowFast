@@ -1,6 +1,6 @@
 ### setup file
-conda create -n SlowFast python=3.8 -y
-conda activate SlowFast
+#conda create -n SlowFast python=3.8 -y
+#conda activate SlowFast
 conda update -n base -c defaults conda -y
 conda install -y -c conda-forge gxx=9
 #sudo apt install gcc-9
@@ -22,7 +22,7 @@ pip install numpy simplejson psutil opencv-python pillow requests urllib3 scipy 
 
 
 #conda install pytorch torchvision torchaudio cudatoolkit=11.6 -c pytorch -c conda-forge
-conda remove torchvision torchaudio -y
+# conda remove torchvision torchaudio -y
 #pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
 pip install 'git+https://github.com/facebookresearch/fvcore'
 pip install -U iopath
@@ -41,4 +41,4 @@ pip install 'git+https://github.com/facebookresearch/fairscale'
 python setup.py build develop
 
 pip uninstall pytorchvideo
-pip install "git+https://github.com/facebookresearch/pytorchvideo.git"
+pip install -y "git+https://github.com/facebookresearch/pytorchvideo.git"
