@@ -539,6 +539,7 @@ def train(cfg):
         config=cfg,
         # id=args["load_from_wandb"] if args["load_from_wandb"] is not None else None,
         name=cfg.name,
+        reinit=True,
         # resume="must" if args["load_from_wandb"] is not None else False,
     )
 
