@@ -4,8 +4,7 @@ import json
 import os
 
 root_Path = "/root/"
-PATH_to_videos = root_path + "/root/userTrain_full_splitted/"
-PATH_to_txt_files = root_path + "ucfTrainTestlist/classInd.txt"
+PATH_to_videos =  "/root/userTrain_full_splitted/"
 
 # results paths
 PATH_to_classInd = root_Path + "classInd.json"
