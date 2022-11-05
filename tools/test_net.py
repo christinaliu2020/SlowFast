@@ -7,6 +7,7 @@ import numpy as np
 import os
 import pickle
 import torch
+import wandb
 
 import slowfast.utils.checkpoint as cu
 import slowfast.utils.distributed as du
