@@ -48,7 +48,7 @@ MODEL:
   LOSS_FUNC: cross_entropy
   DROPOUT_RATE: 0.8
 TEST:
-  ENABLE: True
+  ENABLE: False
   DATASET: kinetics
   BATCH_SIZE: 64
 #  CHECKPOINT_FILE_PATH: ./ucf_finetune/checkpoints/ssl_eval_ucf_checkpoint_epoch_00010.pyth
