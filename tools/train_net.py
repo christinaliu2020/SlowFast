@@ -531,6 +531,18 @@ def train(cfg):
     np.random.seed(cfg.RNG_SEED)
     torch.manual_seed(cfg.RNG_SEED)
 
+    wandb.init(
+        project="mabe_log_test",
+        entity="maggu",
+        # settings=wandb.Settings(start_method="thread"),
+        # save_code=True,
+        config=cfg,
+        # id=args["load_from_wandb"] if args["load_from_wandb"] is not None else None,
+        name=cfg.name,
+        # resume="must" if args["load_from_wandb"] is not None else False,
+    )
+
+
     # Setup logging format.
     logging.setup_logging(cfg.OUTPUT_DIR)
 
