@@ -1,3 +1,5 @@
+fake = False
+
 import numpy as np
 import pandas as pd
 import json
@@ -27,7 +29,10 @@ for line in lines:
     line = line.split(" ")
     id = line[0]
     name = line[1]
-    classinds[name] = int(id)-1
+    if fake:
+        classinds[name] = 0
+    else:
+        classinds[name] = int(id)-1
 
 # save resulting dict as json
 with open(PATH_to_classInd, "w") as fp:
