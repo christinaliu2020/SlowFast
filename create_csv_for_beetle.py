@@ -22,7 +22,7 @@ for f in all_files:
     train.append([f, 0])
 
 # to csv file
-df = pd.DataFrame(train, columns=["video", "label"], index=None, sep=" ")
+df = pd.DataFrame(train, columns=["video", "label"], index=None)
 df.to_csv(PATH_to_train, index=False, header=False)
 df.to_csv(PATH_to_test, index=False, header=False)
 df.to_csv(PATH_to_val, index=False, header=False)
