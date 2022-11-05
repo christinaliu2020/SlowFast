@@ -2,6 +2,11 @@
 #conda create -n SlowFast python=3.8 -y
 #conda activate SlowFast
 conda update -n base -c defaults conda -y
+#
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt update
+sudo apt install gcc-9
+sudo apt install g++-9
 conda install -y -c conda-forge gxx=9
 #sudo apt install gcc-9
 conda install -y av -c conda-forge
