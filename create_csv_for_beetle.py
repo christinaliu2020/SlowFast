@@ -19,7 +19,7 @@ all_files = [f for f in all_files if f.endswith(".mp4")]
 # resulting entries
 train = []
 for f in all_files:
-    train.append([f, 0])
+    train.append([PATH_to_videos + f, 0])
 
 # to csv file
 df = pd.DataFrame(train, columns=["video", "label"], index=None)
