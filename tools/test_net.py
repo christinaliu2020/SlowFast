@@ -2,6 +2,8 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 
 """Multi-view test a video classification model."""
+import os
+os.environ["WANDB_MODE"] = "offline"
 
 import numpy as np
 import os

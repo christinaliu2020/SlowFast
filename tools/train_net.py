@@ -3,6 +3,9 @@
 
 """Train a video classification model."""
 
+import os
+os.environ["WANDB_MODE"] = "offline"
+
 import math
 import numpy as np
 import pprint
