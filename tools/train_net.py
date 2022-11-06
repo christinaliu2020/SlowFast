@@ -177,6 +177,10 @@ def train_epoch(
             if cfg.SOLVER.ACCUMULATION_STEPS > 0:
                 if (cur_iter + 1) % cfg.SOLVER.ACCUMULATION_STEPS == 0:
                     scaler.step(optimizer)
+                    print("opimizer step")
+            else:
+                scaler.step(optimizer)
+                print("opimizer step")
         scaler.update()
 
         if cfg.MIXUP.ENABLE:
