@@ -174,7 +174,13 @@ def train_epoch(
             model, cfg, epoch_exact, cur_iter
         )
         if update_param:
-            scaler.step(optimizer)
+            if cfg.TRAIN.accumulation_steps > 0:
+                if (cur_iter + 1) % cfg.SOLVER.ACCUMULATION_STEP == 0:
+                    scaler.step(optimizer)
+                    scaler.update()
+                    optimizer.zero_grad()
+            # print('update params!!!!!')
+            # scaler.step(optimizer)
         scaler.update()
 
         if cfg.MIXUP.ENABLE:
