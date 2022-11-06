@@ -175,7 +175,7 @@ def train_epoch(
         )
         if update_param:
             if cfg.SOLVER.ACCUMULATION_STEPS > 0:
-                if (cur_iter + 1) % cfg.SOLVER.ACCUMULATION_STEPS == 0:
+                if cur_iter % cfg.SOLVER.ACCUMULATION_STEPS == 0:
                     scaler.step(optimizer)
                     print("opimizer step")
             else:
