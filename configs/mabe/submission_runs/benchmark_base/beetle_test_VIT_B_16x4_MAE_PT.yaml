@@ -86,7 +86,7 @@ DATA_LOADER:
 NUM_GPUS: 8
 NUM_SHARDS: 1
 RNG_SEED: 0
-OUTPUT_DIR: /root/mabe_results_beetle/MAE
+OUTPUT_DIR: /root/mabe_tests/MAE_beetle
 LOG_MODEL_INFO: False
 VIS_MASK:
   ENABLE: True
