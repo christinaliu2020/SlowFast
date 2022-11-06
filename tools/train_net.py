@@ -119,7 +119,9 @@ def train_epoch(
 
             # Explicitly declare reduction to mean.
             perform_backward = True
-            optimizer.zero_grad()
+            if cfg.SOLVER.ACCUMULATION_STEPS > 0:
+                if cur_iter % cfg.SOLVER.ACCUMULATION_STEPS == 0:
+                    optimizer.zero_grad()
 
             if cfg.MODEL.MODEL_NAME == "ContrastiveModel":
                 (
