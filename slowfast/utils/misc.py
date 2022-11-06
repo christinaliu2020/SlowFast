@@ -274,6 +274,8 @@ def plot_input_normed(
         os.mkdir(folder_path)
     except Exception as e:
         pass
+    # create path dir if it doesn't exist
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     tensor = convert_normalized_images(tensor)
     if output_video:
         # assert make_grids, "video needs to have make_grids on"

@@ -231,6 +231,8 @@ _C.VIS_MASK = CfgNode()
 # Whether to do visualization.
 _C.VIS_MASK.ENABLE = False
 
+_C.VIS_MASK.INTERVAL = 100
+
 # ---------------------------------------------------------------------------- #
 # MipUp options.
 # ---------------------------------------------------------------------------- #

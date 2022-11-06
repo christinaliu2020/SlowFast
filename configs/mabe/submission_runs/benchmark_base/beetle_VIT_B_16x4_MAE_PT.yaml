@@ -91,3 +91,4 @@ OUTPUT_DIR: /root/mabe_results_beetle/MAE
 LOG_MODEL_INFO: False
 VIS_MASK:
   ENABLE: True
+  INTERVAL: 10

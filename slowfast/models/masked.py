@@ -412,7 +412,7 @@ class MaskMViT(MViT):
 
         return x, mask, ids_restore, thw
 
-    def _mae_forward_decoder(self, x, ids_restore, mask, thw):
+    def _mae_forward_decoder(self, x, ids_restore, mask, thw, ret_all=False):
         # embed tokens
         x = self.decoder_embed(x)
         T, H, W = self.T, self.H, self.W
@@ -461,7 +461,7 @@ class MaskMViT(MViT):
         pixel_outputs = self.pred_head(
             [x],
             [mask.to(torch.bool)],
-            return_all=self.cfg.VIS_MASK.ENABLE,
+            return_all=ret_all,
             thw=thw,
         )
 
@@ -498,13 +498,17 @@ class MaskMViT(MViT):
                 )
 
         self.counter += 1
-        if self.cfg.VIS_MASK.ENABLE:
-            return self._mae_visualize(imgs, pred, mask)
+        if self.cfg.VIS_MASK.ENABLE and self.counter % self.cfg.VIS_MASK.INTERVAL == 0:
+            top = 4
+            pred_all = self._mae_forward_decoder(latent[:top], ids_restore[:top], mask[:top], (top, thw[1], thw[2]), ret_all=True)
+            self._mae_visualize(imgs[:top], pred_all, mask[:top])
+            del pred_all
         return pred, labels
 
     def _mae_visualize(self, imgs, pred, mask):
         N, T, H, W, p, u, t, h, w = self.patch_info
         pred = pred[0]
+        N = pred.shape[0]
         if self.cfg.MASK.TIME_STRIDE_LOSS:
             im_viz = imgs[:, :, :: self.cfg.MVIT.PATCH_STRIDE[0], :, :]
         else:
@@ -545,7 +549,7 @@ class MaskMViT(MViT):
                 make_grids=True,
                 output_video=True,
             )
-        return pred[0]
+        del pred, im_viz, reconstruct, masked, comparison
 
     def _maskfeat_forward(self, x, mask, return_all=False):
         x_embed, x_shape = self.patch_embed(x)
