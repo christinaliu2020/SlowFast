@@ -4,9 +4,10 @@ TRAIN:
   DATASET: kinetics
   BATCH_SIZE: 16
   EVAL_PERIOD: 100000
-  CHECKPOINT_PERIOD: 100
+  CHECKPOINT_PERIOD: 50
   AUTO_RESUME: True
   KILL_LOSS_EXPLOSION_FACTOR: 2.0 # default 0.0 (not enforced)
+  CHECKPOINT_FILE_PATH: /root/mabe_results_beetle/MAE/checkpoints/ssl_checkpoint_epoch_00200.pyth
 DATA:
   USE_OFFSET_SAMPLING: True
   DECODING_BACKEND: pyav
@@ -88,3 +89,5 @@ NUM_SHARDS: 1
 RNG_SEED: 0
 OUTPUT_DIR: /root/mabe_results_beetle/MAE
 LOG_MODEL_INFO: False
+VIS_MASK:
+  ENABLE: True
