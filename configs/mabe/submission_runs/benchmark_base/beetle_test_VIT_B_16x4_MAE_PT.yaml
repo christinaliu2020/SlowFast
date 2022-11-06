@@ -28,7 +28,7 @@ MVIT:
   PATCH_KERNEL: (2, 16, 16)
   PATCH_STRIDE: (2, 16, 16)
   PATCH_PADDING: (0, 0, 0)
-  EMBED_DIM: 128 # vit-B
+  EMBED_DIM: 96 # vit-B
   NUM_HEADS: 6
   MLP_RATIO: 4.0
   QKV_BIAS: True
@@ -90,4 +90,4 @@ OUTPUT_DIR: /root/mabe_tests/MAE_beetle
 LOG_MODEL_INFO: False
 VIS_MASK:
   ENABLE: True
-  INTERVAL: 1000
+  INTERVAL: 100
