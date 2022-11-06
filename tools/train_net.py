@@ -119,7 +119,9 @@ def train_epoch(
 
             # Explicitly declare reduction to mean.
             perform_backward = True
-            optimizer.zero_grad()
+            if cfg.SOLVER.ACCUMULATION_STEPS > 0:
+                if cur_iter % cfg.SOLVER.ACCUMULATION_STEPS == 0:
+                    optimizer.zero_grad()
 
             if cfg.MODEL.MODEL_NAME == "ContrastiveModel":
                 (
@@ -174,7 +176,13 @@ def train_epoch(
             model, cfg, epoch_exact, cur_iter
         )
         if update_param:
-            scaler.step(optimizer)
+            if cfg.SOLVER.ACCUMULATION_STEPS > 0:
+                if cur_iter % cfg.SOLVER.ACCUMULATION_STEPS == 0:
+                    scaler.step(optimizer)
+                    print("opimizer step")
+            else:
+                scaler.step(optimizer)
+                print("opimizer step")
         scaler.update()
 
         if cfg.MIXUP.ENABLE:
