@@ -2,9 +2,11 @@
 #conda create -n SlowFast python=3.8 -y
 #conda activate SlowFast
 conda update -n base -c defaults conda -y
-apt-get -y update && apt-get -y install libgl1
-conda install -y -c conda-forge gxx=9
-
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt update
+sudo apt install gcc-9
+sudo apt install g++-9
+#conda install -y -c conda-forge gxx=9
 #sudo apt install gcc-9
 conda install -y av -c conda-forge
 conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch -y
@@ -42,5 +44,5 @@ pip install 'git+https://github.com/facebookresearch/fairscale'
 
 python setup.py build develop
 
-pip uninstall -y pytorchvideo
+pip uninstall pytorchvideo
 pip install "git+https://github.com/facebookresearch/pytorchvideo.git"

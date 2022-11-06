@@ -50,7 +50,10 @@ from subprocess import call
 train_csv = pd.read_csv(PATH_to_annotations + "trainlist01.txt", sep=" ", header=None)
 train_csv.columns = ["path", "label"]
 # substract from each label 1
-train_csv["label"] = train_csv["label"] - 1
+if fake:
+    train_csv["label"] = 0
+else:
+    train_csv["label"] = train_csv["label"] - 1
 # save as csv
 train_csv.to_csv(PATH_to_train, index=False, header=False, sep=" ")
 train_csv.to_csv(PATH_to_val, index=False, header=False, sep=" ")
@@ -70,7 +73,10 @@ for row_idx, row in enumerate(test_csv.iterrows()):
     video_name = row.split('/')[0]
     label = classinds[video_name]
     # save the label
-    test_csv["label"][row_idx] = label
+    if fake:
+        test_csv["label"][row_idx] = 0
+    else:
+        test_csv["label"][row_idx] = label
 
 
 # save as csv
