@@ -24,6 +24,8 @@ CONTRASTIVE:
   MOMENTUM_ANNEALING: True # default false
   TYPE: byol # default mem
   PREDICTOR_DEPTHS: [2]
+  NUM_CLASSES_DOWNSTREAM: 101
+  LENGTH: 9537
 DATA:
   NUM_FRAMES: 8
   SAMPLING_RATE: 8
@@ -43,6 +45,12 @@ DATA:
   TEST_CROP_SIZE: 256
   INPUT_CHANNEL_NUM: [3]
   PATH_LABEL_SEPARATOR: " "
+#  PATH_TO_DATA_DIR: /home/markus/PycharmProjects/SlowFast/data/ucf/
+#  PATH_PREFIX: /home/markus/PycharmProjects/SlowFast/data/ucf/
+  PATH_TO_DATA_DIR: /root/
+  PATH_PREFIX: /root/
+  DECODING_SHORT_SIZE: 256
+  DECODING_BACKEND: pyav
 BN:
   USE_PRECISE_STATS: False
   NUM_BATCHES_PRECISE: 200
@@ -65,10 +73,14 @@ SOLVER:
 TEST:
   ENABLE: True
   DATASET: kinetics
+#  BATCH_SIZE: 6
   BATCH_SIZE: 64
+  NUM_TEMPORAL_CLIPS: [1]
 DATA_LOADER:
   NUM_WORKERS: 10
   PIN_MEMORY: True
 NUM_GPUS: 8
 RNG_SEED: 0
-OUTPUT_DIR: .
+OUTPUT_DIR: /root/mabe_results/byol_slow_r50_8x8
+DETECTION:
+  ENABLE: False
