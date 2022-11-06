@@ -174,8 +174,8 @@ def train_epoch(
             model, cfg, epoch_exact, cur_iter
         )
         if update_param:
-            if cfg.TRAIN.accumulation_steps > 0:
-                if (cur_iter + 1) % cfg.SOLVER.ACCUMULATION_STEP == 0:
+            if cfg.SOLVER.ACCUMULATION_STEPS > 0:
+                if (cur_iter + 1) % cfg.SOLVER.ACCUMULATION_STEPS == 0:
                     scaler.step(optimizer)
                     scaler.update()
                     optimizer.zero_grad()

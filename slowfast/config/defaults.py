@@ -878,7 +878,7 @@ _C.SOLVER.LAYER_DECAY = 1.0
 # Adam's beta
 _C.SOLVER.BETAS = (0.9, 0.999)
 
-_C.SOLVER.ACCUMULATION_STEP = 0
+_C.SOLVER.ACCUMULATION_STEPS = 0
 # ---------------------------------------------------------------------------- #
 # Misc options
 # ---------------------------------------------------------------------------- #
