@@ -2,7 +2,7 @@ TASK: ssl
 TRAIN:
   ENABLE: True
   DATASET: kinetics
-  BATCH_SIZE: 16
+  BATCH_SIZE: 32
   EVAL_PERIOD: 100000
   CHECKPOINT_PERIOD: 100
   AUTO_RESUME: True
@@ -85,5 +85,5 @@ DATA_LOADER:
 NUM_GPUS: 8
 NUM_SHARDS: 1
 RNG_SEED: 0
-OUTPUT_DIR: /root/mabe_results/MAE
+OUTPUT_DIR: /root/mabe_results_beetle/MAE
 LOG_MODEL_INFO: False
