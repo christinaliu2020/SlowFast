@@ -85,7 +85,7 @@ DATA_LOADER:
 NUM_GPUS: 8
 NUM_SHARDS: 1
 RNG_SEED: 0
-OUTPUT_DIR: /root/mabe_results_mouse/MAE
+OUTPUT_DIR: /root/mabe_test_mouse/MAE
 LOG_MODEL_INFO: False
 VIS_MASK:
   ENABLE: True
