@@ -550,6 +550,7 @@ def train(cfg):
         reinit=True,
         # resume="must" if args["load_from_wandb"] is not None else False,
     )
+    cfg["wandb"] = wandb
 
     # Setup logging format.
     logging.setup_logging(cfg.OUTPUT_DIR)

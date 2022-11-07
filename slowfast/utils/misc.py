@@ -10,6 +10,7 @@ from datetime import datetime
 import psutil
 import torch
 import torchvision.io as io
+from einops import rearrange
 from fvcore.nn.activation_count import activation_count
 from fvcore.nn.flop_count import flop_count
 from matplotlib import pyplot as plt
@@ -260,6 +261,8 @@ def plot_input_normed(
     folder_path="",
     make_grids=False,
     output_video=False,
+    cfg=None,
+    counter=0,
 ):
     """
     Plot the input tensor with the optional bounding box and save it to disk.
@@ -290,6 +293,14 @@ def plot_input_normed(
             vid = tensor.reshape([sz[0] * sz[1], sz[2], sz[3], sz[4]])
 
         vid = vid.permute([0, 2, 3, 1])
+        cfg["wandb"].log(
+            {
+                "mae_image": cfg["wandb"].Image(
+                    rearrange(vid, 'b h w c -> c (b h) w'), caption="reconstructions"
+                )
+            },
+            step=counter,
+        )
         vid *= 255.0
         vid = vid.to(torch.uint8)
         fps = 30.0 * vid.shape[0] / 64.0

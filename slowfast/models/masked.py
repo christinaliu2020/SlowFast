@@ -10,6 +10,7 @@ from torch.nn.init import trunc_normal_
 
 import slowfast.utils.logging as logging
 import slowfast.utils.misc as misc
+import slowfast.utils.distributed as du
 from slowfast.models import head_helper
 from slowfast.models.attention import attention_pool
 from slowfast.models.utils import calc_mvit_feature_geometry
@@ -498,7 +499,7 @@ class MaskMViT(MViT):
                 )
 
         self.counter += 1
-        if self.cfg.VIS_MASK.ENABLE and self.counter % self.cfg.VIS_MASK.INTERVAL == 0:
+        if self.cfg.VIS_MASK.ENABLE and self.counter % self.cfg.VIS_MASK.INTERVAL == 0 and du.is_master_proc() :
             top = 4
             pred_all = self._mae_forward_decoder(latent[:top], ids_restore[:top], mask[:top], (top, thw[1], thw[2]), ret_all=True)
             self._mae_visualize(imgs[:top], pred_all, mask[:top])
@@ -548,6 +549,8 @@ class MaskMViT(MViT):
                 ),
                 make_grids=True,
                 output_video=True,
+                cfg=self.cfg,
+                counter=self.counter,
             )
         del pred, im_viz, reconstruct, masked, comparison
 
