@@ -468,7 +468,7 @@ class MaskMViT(MViT):
 
         return pixel_outputs
 
-    def _mae_forward(self, imgs, mask_ratio=0.75, mask=None):
+    def _mae_forward(self, imgs, mask_ratio=0.75, mask=None, wandb=None):
         latent, mask, ids_restore, thw = self._mae_forward_encoder(
             imgs, mask_ratio, mask
         )
@@ -502,11 +502,11 @@ class MaskMViT(MViT):
         if self.cfg.VIS_MASK.ENABLE and self.counter % self.cfg.VIS_MASK.INTERVAL == 0 and du.is_master_proc() :
             top = 4
             pred_all = self._mae_forward_decoder(latent[:top], ids_restore[:top], mask[:top], (top, thw[1], thw[2]), ret_all=True)
-            self._mae_visualize(imgs[:top], pred_all, mask[:top])
+            self._mae_visualize(imgs[:top], pred_all, mask[:top], wandb=wandb)
             del pred_all
         return pred, labels
 
-    def _mae_visualize(self, imgs, pred, mask):
+    def _mae_visualize(self, imgs, pred, mask, wandb=None):
         N, T, H, W, p, u, t, h, w = self.patch_info
         pred = pred[0]
         N = pred.shape[0]
@@ -549,7 +549,7 @@ class MaskMViT(MViT):
                 ),
                 make_grids=True,
                 output_video=True,
-                cfg=self.cfg,
+                wandb=wandb,
                 counter=self.counter,
             )
         del pred, im_viz, reconstruct, masked, comparison
@@ -651,7 +651,7 @@ class MaskMViT(MViT):
 
         return model_outputs, labels
 
-    def forward(self, x, return_all=False):
+    def forward(self, x, return_all=False, wandb=None):
         if len(x) > 1:
             x, meta, mask = x
         else:
@@ -659,7 +659,7 @@ class MaskMViT(MViT):
 
         if self.cfg.MASK.MAE_ON:
             return self._mae_forward(
-                x, mask_ratio=self.cfg.AUG.MASK_RATIO, mask=mask
+                x, mask_ratio=self.cfg.AUG.MASK_RATIO, mask=mask, wandb=wandb
             )
         else:
             return self._maskfeat_forward(x, mask, return_all)

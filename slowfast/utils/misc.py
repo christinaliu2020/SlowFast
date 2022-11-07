@@ -261,7 +261,7 @@ def plot_input_normed(
     folder_path="",
     make_grids=False,
     output_video=False,
-    cfg=None,
+    wandb=None,
     counter=0,
 ):
     """
@@ -293,9 +293,9 @@ def plot_input_normed(
             vid = tensor.reshape([sz[0] * sz[1], sz[2], sz[3], sz[4]])
 
         vid = vid.permute([0, 2, 3, 1])
-        cfg["wandb"].log(
+        wandb.log(
             {
-                "mae_image": cfg["wandb"].Image(
+                "mae_image": wandb.Image(
                     rearrange(vid, 'b h w c -> c (b h) w'), caption="reconstructions"
                 )
             },

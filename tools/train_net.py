@@ -40,6 +40,7 @@ def train_epoch(
     cur_epoch,
     cfg,
     writer=None,
+    wandb=None,
 ):
     """
     Perform the video training for one epoch.
@@ -136,7 +137,7 @@ def train_epoch(
                 # Compute the predictions.
                 preds = model(inputs, meta["boxes"])
             elif cfg.MASK.ENABLE:
-                preds, labels = model(inputs)
+                preds, labels = model(inputs, wandb=wandb)
             else:
                 preds = model(inputs)
             if cfg.TASK == "ssl" and cfg.MODEL.MODEL_NAME == "ContrastiveModel":
@@ -717,6 +718,7 @@ def train(cfg):
             cur_epoch,
             cfg,
             writer,
+            wandb,
         )
         epoch_timer.epoch_toc()
         logger.info(
