@@ -293,7 +293,7 @@ def plot_input_normed(
         vid *= 255.0
         vid = vid.to(torch.uint8)
         fps = 30.0 * vid.shape[0] / 64.0
-        io.video.write_video(path, vid, fps, video_codec="libx264")
+        io.video.write_video(path, vid, fps, video_codec="h264")
     elif make_grids:
         if tensor.ndim > 4 and tensor.shape[0] == 1:
             tensor = tensor.squeeze()
