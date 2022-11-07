@@ -1,12 +1,20 @@
 ### setup file
 #conda create -n SlowFast python=3.8 -y
 #conda activate SlowFast
-conda update -n base -c defaults conda -y
-#
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test
 sudo apt update
-sudo apt install gcc-9
-sudo apt install g++-9
+sudo apt install -y gcc-9
+sudo apt install -y g++-9
+cp /usr/bin/g++-9 /usr/bin/g++
+cp /usr/bin/gcc-9 /usr/bin/gcc
+apt-get update && apt-get install libgl1
+conda update -n base -c defaults conda -y
+conda install -c conda-forge libiconv -y
+conda install ffmpeg=4.2 -c conda-forge -y
+
+# add gcc to path
+#export PATH=/usr/bin/gcc-9:$PATH
+
 #conda install -y -c conda-forge gxx=9
 #sudo apt install gcc-9
 conda install -y av -c conda-forge
@@ -15,8 +23,7 @@ pip install pytorchvideo
 git clone https://github.com/facebookresearch/detectron2 detectron2_repo
 pip install -e detectron2_repo
 
-conda install -c conda-forge libiconv -y
-conda install ffmpeg=4.2 -c conda-forge -y
+
 pip install numpy simplejson psutil opencv-python pillow requests urllib3 scipy pandas tqdm scikit-learn
 
 #git clone --recursive https://github.com/pytorch/pytorch
