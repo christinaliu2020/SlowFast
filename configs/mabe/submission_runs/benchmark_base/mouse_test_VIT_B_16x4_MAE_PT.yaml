@@ -2,7 +2,7 @@ TASK: ssl
 TRAIN:
   ENABLE: True
   DATASET: kinetics
-  BATCH_SIZE: 128
+  BATCH_SIZE: 64
   EVAL_PERIOD: 100000
   CHECKPOINT_PERIOD: 50
   AUTO_RESUME: False
@@ -28,12 +28,12 @@ MVIT:
   PATCH_KERNEL: (2, 16, 16)
   PATCH_STRIDE: (2, 16, 16)
   PATCH_PADDING: (0, 0, 0)
-  EMBED_DIM: 768 # vit-B
-  NUM_HEADS: 12
+  EMBED_DIM: 96 # vit-B
+  NUM_HEADS: 6
   MLP_RATIO: 4.0
   QKV_BIAS: True
   NORM: "layernorm"
-  DEPTH: 12
+  DEPTH: 6
   DROPPATH_RATE: 0.0
   MODE: "conv"
   CLS_EMBED_ON: True
@@ -41,7 +41,7 @@ MASK:
   ENABLE: True
   MAE_ON: True #  default False
   MAE_RND_MASK: True # default: false
-  PRETRAIN_DEPTH: [11]
+  PRETRAIN_DEPTH: [5]
   HEAD_TYPE: "separate_xformer"
   DECODER_DEPTH: 4
   DECODER_EMBED_DIM: 512
