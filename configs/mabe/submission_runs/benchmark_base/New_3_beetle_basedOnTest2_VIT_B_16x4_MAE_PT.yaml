@@ -82,7 +82,7 @@ TEST:
 DATA_LOADER:
   NUM_WORKERS: 8
   PIN_MEMORY: True
-NUM_GPUS: 4
+NUM_GPUS: 8
 NUM_SHARDS: 1
 RNG_SEED: 0
 OUTPUT_DIR: /root/beetle_mouse_test/MAE_beetle
