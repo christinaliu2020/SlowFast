@@ -25,8 +25,8 @@ DATA:
 MVIT:
   ZERO_DECAY_POS_CLS: False
   SEP_POS_EMBED: True # default: False needs to be false for fixed sincos
-  PATCH_KERNEL: (4, 16, 16)
-  PATCH_STRIDE: (4, 16, 16)
+  PATCH_KERNEL: (2, 16, 16)
+  PATCH_STRIDE: (2, 16, 16)
   PATCH_PADDING: (0, 0, 0)
   EMBED_DIM: 96 # vit-B
   NUM_HEADS: 4
