@@ -568,6 +568,13 @@ def train(cfg):
 
     # Build the video model and print model statistics.
     model = build_model(cfg)
+
+    n_parameters = sum(
+        p.numel() for p in model.parameters() if p.requires_grad
+    )
+
+    wandb.log({"n_parameters": n_parameters})
+
     flops, params = 0.0, 0.0
     if du.is_master_proc() and cfg.LOG_MODEL_INFO:
         flops, params = misc.log_model_info(model, cfg, use_train_input=True)
