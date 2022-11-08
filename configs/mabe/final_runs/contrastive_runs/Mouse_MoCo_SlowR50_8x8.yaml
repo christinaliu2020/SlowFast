@@ -61,6 +61,6 @@ TEST:
   ENABLE: True
   DATASET: kinetics
   BATCH_SIZE: 64
-NUM_GPUS: 8
+NUM_GPUS: 4
 RNG_SEED: 0
 OUTPUT_DIR: /root/mouse_moco_rho4
