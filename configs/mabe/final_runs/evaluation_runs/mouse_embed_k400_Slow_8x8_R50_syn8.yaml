@@ -76,7 +76,7 @@ DEMO:
 #  OUTPUT_FILE: /home/markus/PycharmProjects/contrast_MAE/MABe/beetle_test_results/results.npy
   OUTPUT_FILE: /root/byol_pretrained_results_mouse.npy
 #  INPUT_FORMAT: RGB
-  CHECKPOINT_FILE_PATH: ../pretrained_models/BYOL_SlowR50_8x8_T2_epoch_00200.pyth
+  CHECKPOINT_FILE_PATH: /root/pretrained_models/BYOL_SlowR50_8x8_T2_epoch_00200.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ("backbone.",)
   CHECKPOINT_TYPE: pytorch
 #  FRAME_MAP_PATH: /home/markus/PycharmProjects/mabe-2022-public-evaluator/round2/metadata/mouse_round2_frame_number_map.npy
