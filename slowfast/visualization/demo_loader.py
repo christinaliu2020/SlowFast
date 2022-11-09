@@ -19,19 +19,22 @@ class VideoManager:
     VideoManager object for getting frames from video source for inference.
     """
 
-    def __init__(self, cfg):
+    def __init__(self, cfg, input_video=None, seq_length=None):
         """
         Args:
             cfg (CfgNode): configs. Details can be found in
             slowfast/config/defaults.py
         """
         assert (
-            cfg.DEMO.WEBCAM > -1 or cfg.DEMO.INPUT_VIDEO != ""
+            cfg.DEMO.WEBCAM > -1 or cfg.DEMO.INPUT_VIDEO != "" or input_video is not None
         ), "Must specify a data source as input."
 
-        self.source = (
-            cfg.DEMO.WEBCAM if cfg.DEMO.WEBCAM > -1 else cfg.DEMO.INPUT_VIDEO
-        )
+        if input_video is not None:
+            self.source = input_video
+        else:
+            self.source = (
+                cfg.DEMO.WEBCAM if cfg.DEMO.WEBCAM > -1 else cfg.DEMO.INPUT_VIDEO
+            )
 
         self.display_width = cfg.DEMO.DISPLAY_WIDTH
         self.display_height = cfg.DEMO.DISPLAY_HEIGHT
@@ -60,7 +63,10 @@ class VideoManager:
         self.id = -1
         self.buffer = []
         self.buffer_size = cfg.DEMO.BUFFER_SIZE
-        self.seq_length = cfg.DATA.NUM_FRAMES * cfg.DATA.SAMPLING_RATE
+        if seq_length is not None:
+            self.seq_length = seq_length
+        else:
+            self.seq_length = cfg.DATA.NUM_FRAMES * cfg.DATA.SAMPLING_RATE
         self.test_crop_size = cfg.DATA.TEST_CROP_SIZE
         self.clip_vis_size = cfg.DEMO.CLIP_VIS_SIZE
 

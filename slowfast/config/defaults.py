@@ -233,6 +233,12 @@ _C.VIS_MASK.ENABLE = False
 
 _C.VIS_MASK.INTERVAL = 100
 
+_C.EMBEDDING = CfgNode()
+
+_C.EMBEDDING.ENABLE = False
+_C.EMBEDDING.PATH_TO_VIDEO_FOLDER = ""
+_C.EMBEDDING.PATH_TO_FRAME_MAP = ""
+
 # ---------------------------------------------------------------------------- #
 # MipUp options.
 # ---------------------------------------------------------------------------- #
@@ -1189,6 +1195,12 @@ _C.DEMO.WEBCAM = -1
 
 # Path to input video for demo.
 _C.DEMO.INPUT_VIDEO = ""
+_C.DEMO.INPUT_VIDEOS = ""
+_C.DEMO.BATCH_SIZE = 64
+_C.DEMO.CHECKPOINT_FILE_PATH = ""
+_C.DEMO.CHECKPOINT_CLEAR_NAME_PATTERN = ()
+_C.DEMO.CHECKPOINT_TYPE = "pytorch"
+_C.DEMO.FRAME_MAP_PATH = ""
 # Custom width for reading input video data.
 _C.DEMO.DISPLAY_WIDTH = 0
 # Custom height for reading input video data.
