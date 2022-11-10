@@ -94,7 +94,7 @@ TEST:
 DATA_LOADER:
   NUM_WORKERS: 0
   PIN_MEMORY: True
-NUM_GPUS: 1
+NUM_GPUS: 2
 NUM_SHARDS: 1
 RNG_SEED: 0
 OUTPUT_DIR: /home/markus/Desktop/ssl_tests/byol_demo_linear/
@@ -102,7 +102,7 @@ DEMO:
   ENABLE: True
   INPUT_VIDEOS: /root/submission_videos_mp4/
   THREAD_ENABLE: False
-  BATCH_SIZE: 64
+  BATCH_SIZE: 128
   OUTPUT_FILE: /root/MVIT_pretrained_results_beetle.npy
   CHECKPOINT_FILE_PATH: /root/pretrained_models/k400_MVIT_S_MaskFeat_PT_epoch_00300.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ()
