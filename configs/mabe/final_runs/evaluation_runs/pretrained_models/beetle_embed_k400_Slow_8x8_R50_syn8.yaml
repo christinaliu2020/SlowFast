@@ -73,3 +73,4 @@ DEMO:
   CHECKPOINT_FILE_PATH: /root/pretrained_models/BYOL_SlowR50_8x8_T4_epoch_00200.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ("backbone.",)
   CHECKPOINT_TYPE: pytorch
+  CLIP_LENGTH: 900
