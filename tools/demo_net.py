@@ -112,8 +112,7 @@ def run_demo(cfg, frame_provider, model):
             std = torch.as_tensor(cfg.DATA.STD, dtype=batch.dtype, device=batch.device)
             batch.sub_(mean[:, None, None, None]).div_(std[:, None, None, None])
             batch = batch.to('cuda')
-            with torch.no_grad():
-                out = model([batch])
+            out = model([batch])
             out = out.cpu()
             out = out.numpy()
             res.append(out)
@@ -144,6 +143,7 @@ def demo(cfg):
             model = build_model(cfg)
             model.eval()
 
+            # test = torch.load(cfg.DEMO.CHECKPOINT_FILE_PATH)
             try:
                 model.head.projection = torch.nn.Identity()
                 model.head.act = torch.nn.Identity()
@@ -186,3 +186,6 @@ def demo(cfg):
             frame_provider.join()
             frame_provider.clean()
             logger.info("Finish demo in: {}".format(time.time() - start))
+
+        end = time.time()
+        print('Time: ', end - start)
