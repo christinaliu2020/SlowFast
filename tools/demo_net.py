@@ -144,8 +144,13 @@ def demo(cfg):
             model = build_model(cfg)
             model.eval()
 
-            model.head.projection = torch.nn.Identity()
-            model.head.act = torch.nn.Identity()
+            try:
+                model.head.projection = torch.nn.Identity()
+                model.head.act = torch.nn.Identity()
+            except AttributeError:
+                model.modul.head.projection = torch.nn.Identity()
+                model.modul.head.act = torch.nn.Identity()
+
 
             load_checkpoint(
                 cfg.DEMO.CHECKPOINT_FILE_PATH,
