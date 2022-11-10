@@ -41,7 +41,9 @@ def run_demo(cfg, frame_provider, model):
     logging.setup_logging(cfg.OUTPUT_DIR)
     # Print config.
     logger.info("Run demo with config:")
-    logger.info(cfg)
+
+    # logger.info(cfg)
+
     common_classes = (
         cfg.DEMO.COMMON_CLASS_NAMES
         if len(cfg.DEMO.LABEL_FILE_PATH) != 0
@@ -158,6 +160,7 @@ def demo(cfg):
 
             results = {}
             for video in tqdm.tqdm(all_videos):
+                print('VIDEO: ', video)
                 frame_provider = VideoManager(cfg, input_video=video, seq_length=1800)
                 video_res = run_demo(cfg, frame_provider, model)
                 results[video.split('/')[-1].split('.mp4')[0]] = video_res
