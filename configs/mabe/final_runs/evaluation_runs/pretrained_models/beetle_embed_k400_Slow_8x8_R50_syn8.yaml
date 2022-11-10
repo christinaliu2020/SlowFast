@@ -15,7 +15,7 @@ DATA:
   SAMPLING_RATE: 8
   TRAIN_JITTER_SCALES: [256, 320]
   TRAIN_CROP_SIZE: 224
-  TEST_CROP_SIZE: 256
+  TEST_CROP_SIZE: 224
   INPUT_CHANNEL_NUM: [3]
 #  PATH_TO_DATA_DIR: /home/markus/PycharmProjects/SlowFast/data/ucf/
 #  PATH_PREFIX: /home/markus/PycharmProjects/SlowFast/data/ucf/
@@ -66,17 +66,10 @@ OUTPUT_DIR: /home/markus/Desktop/ssl_tests/byol_demo_linear/
 #  PATH_TO_FRAME_MAP: /home/markus/PycharmProjects/mabe-2022-public-evaluator/round2/metadata/mouse_round2_frame_number_map.npy
 DEMO:
   ENABLE: True
-#  INPUT_VIDEO: /home/markus/PycharmProjects/contrast_MAE/MABe/mouse_data/submission_videos_resized_224/submission_videos_mp4/ZXCAKMKDMQKICB1A10DZ.mp4
-#  INPUT_VIDEOS: /home/markus/PycharmProjects/contrast_MAE/MABe/beetle_test_data
   INPUT_VIDEOS: /root/submission_videos_mp4/
-#  INPUT_VIDEOS: /home/markus/PycharmProjects/contrast_MAE/data/UCF-101/ApplyEyeMakeup
-#  LABEL_FILE_PATH: /home/markus/PycharmProjects/contrast_MAE/MABe/mouse_data/classInd.json
   THREAD_ENABLE: False
   BATCH_SIZE: 128
-#  OUTPUT_FILE: /home/markus/PycharmProjects/contrast_MAE/MABe/beetle_test_results/results.npy
-  OUTPUT_FILE: /root/byol_pretrained_results_mouse.npy
-#  INPUT_FORMAT: RGB
+  OUTPUT_FILE: /root/byol_pretrained_results_beetle.npy
   CHECKPOINT_FILE_PATH: /root/pretrained_models/BYOL_SlowR50_8x8_T2_epoch_00200.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ("backbone.",)
   CHECKPOINT_TYPE: pytorch
-#  FRAME_MAP_PATH: /home/markus/PycharmProjects/mabe-2022-public-evaluator/round2/metadata/mouse_round2_frame_number_map.npy
