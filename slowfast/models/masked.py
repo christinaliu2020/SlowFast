@@ -308,6 +308,12 @@ class MaskMViT(MViT):
                     .repeat([1, self.T, 1])
                     .reshape(N, L)
                 )  # noise in [0, 1]
+            elif self.cfg.AUG.MASK_FRAMES:
+                noise = (
+                    torch.rand(N, self.T, 1, device=x.device)
+                    .repeat([1, 1, self.H * self.W])
+                    .reshape(N, L)
+                )
             else:
                 noise = torch.rand(N, L, device=x.device)  # noise in [0, 1]
         else:
