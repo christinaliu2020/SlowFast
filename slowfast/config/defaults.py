@@ -1201,6 +1201,7 @@ _C.DEMO.CHECKPOINT_FILE_PATH = ""
 _C.DEMO.CHECKPOINT_CLEAR_NAME_PATTERN = ()
 _C.DEMO.CHECKPOINT_TYPE = "pytorch"
 _C.DEMO.FRAME_MAP_PATH = ""
+_C.DEMO.CLIP_LENGTH = 1
 # Custom width for reading input video data.
 _C.DEMO.DISPLAY_WIDTH = 0
 # Custom height for reading input video data.
