@@ -148,8 +148,8 @@ def demo(cfg):
                 model.head.projection = torch.nn.Identity()
                 model.head.act = torch.nn.Identity()
             except AttributeError:
-                model.modul.head.projection = torch.nn.Identity()
-                model.modul.head.act = torch.nn.Identity()
+                model.module.head.projection = torch.nn.Identity()
+                model.module.head.act = torch.nn.Identity()
 
 
             load_checkpoint(
