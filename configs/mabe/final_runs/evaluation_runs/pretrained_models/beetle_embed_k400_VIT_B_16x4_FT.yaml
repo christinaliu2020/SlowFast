@@ -95,8 +95,9 @@ DEMO:
   INPUT_VIDEOS: /root/submission_videos_mp4/
   THREAD_ENABLE: False
   BATCH_SIZE: 128
-  OUTPUT_FILE: /root/MAE_pretrained_results_beetle.npy
+  OUTPUT_FILE: /root/MAE_pretrained_results_beetle
   CHECKPOINT_FILE_PATH: /root/pretrained_models/VIT_B_16x4_MAE_PT.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ()
   CHECKPOINT_TYPE: pytorch
   CLIP_LENGTH: 900
+  SUBSAMPLE: 4

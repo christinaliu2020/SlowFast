@@ -69,8 +69,9 @@ DEMO:
   INPUT_VIDEOS: /root/submission_videos_mp4/
   THREAD_ENABLE: False
   BATCH_SIZE: 128
-  OUTPUT_FILE: /root/byol_pretrained_results_beetle.npy
+  OUTPUT_FILE: /root/byol_pretrained_results_beetle
   CHECKPOINT_FILE_PATH: /root/pretrained_models/BYOL_SlowR50_8x8_T4_epoch_00200.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ("backbone.",)
   CHECKPOINT_TYPE: pytorch
   CLIP_LENGTH: 900
+  SUBSAMPLE: 4

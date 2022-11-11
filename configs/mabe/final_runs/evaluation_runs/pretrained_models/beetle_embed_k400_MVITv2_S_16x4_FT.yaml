@@ -103,8 +103,9 @@ DEMO:
   INPUT_VIDEOS: /root/submission_videos_mp4/
   THREAD_ENABLE: False
   BATCH_SIZE: 128
-  OUTPUT_FILE: /root/MVIT_pretrained_results_beetle.npy
+  OUTPUT_FILE: /root/MVIT_pretrained_results_beetle
   CHECKPOINT_FILE_PATH: /root/pretrained_models/k400_MVIT_S_MaskFeat_PT_epoch_00300.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ()
   CHECKPOINT_TYPE: pytorch
   CLIP_LENGTH: 900
+  SUBSAMPLE: 4
