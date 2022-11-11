@@ -99,7 +99,6 @@ def run_demo(cfg, frame_provider, model):
 
     batches = torch.from_numpy(sequences)
     batches = rearrange(batches, 'b t h w c -> b c t h w').float()
-    batches = batches / 255.0
 
     mean = torch.as_tensor(cfg.DATA.MEAN, dtype=batches.dtype, device=batches.device)
     std = torch.as_tensor(cfg.DATA.STD, dtype=batches.dtype, device=batches.device)
@@ -112,6 +111,7 @@ def run_demo(cfg, frame_provider, model):
         for i in tqdm.tqdm(range(0, len(batches), BATCH_SIZE)):
             print(i)
             batch = batches[i:i + BATCH_SIZE]
+            batch = batch / 255.0
             batch.sub_(mean[:, None, None, None]).div_(std[:, None, None, None])
             batch = batch.to('cuda')
             out = model([batch])
