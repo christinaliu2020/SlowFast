@@ -76,7 +76,7 @@ MODEL:
   ARCH: mvit
   MODEL_NAME: MViT
   LOSS_FUNC: soft_cross_entropy # default cross_entropy
-  DROPOUT_RATE: 0.3
+  DROPOUT_RATE: 0.0
 TEST:
   ENABLE: False
   DATASET: kinetics
