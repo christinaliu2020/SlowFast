@@ -69,7 +69,7 @@ DEMO:
   INPUT_VIDEOS: /root/submission_videos_mp4/
   THREAD_ENABLE: False
   BATCH_SIZE: 128
-  OUTPUT_FILE: /root/byol_4_fromSelf_mouse
+  OUTPUT_FILE: /root/byol_3_fromSelf_mouse
   CHECKPOINT_FILE_PATH: /root/Mouse_BYOL_rho3_SlowR50_8x8_epoch_00200.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ("backbone.",)
   CHECKPOINT_TYPE: pytorch
