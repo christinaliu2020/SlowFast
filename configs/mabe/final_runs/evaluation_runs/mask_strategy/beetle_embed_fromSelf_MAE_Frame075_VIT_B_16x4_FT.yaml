@@ -97,7 +97,7 @@ DEMO:
   THREAD_ENABLE: False
   BATCH_SIZE: 256
   OUTPUT_FILE: /root/MAE_fromSelf_Frame_075_pretrained_results_beetle
-  CHECKPOINT_FILE_PATH: /root/Beetle_MAE_Frame_075_VIT_B_16x4_epoch_01000.pyth
+  CHECKPOINT_FILE_PATH: /root/Beetle_MAE_FrameFIXED_075_VIT_B_16x4_epoch_01000.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ()
   CHECKPOINT_TYPE: pytorch
   CLIP_LENGTH: 900
