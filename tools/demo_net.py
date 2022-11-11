@@ -95,32 +95,30 @@ def run_demo(cfg, frame_provider, model):
         sequences.append(sequence)
 
     sequences = np.array(sequences)
-    # split sequences into batches
-    batches = []
-    for i in range(0, len(sequences), BATCH_SIZE):
-        batches.append(sequences[i:i + BATCH_SIZE])
 
+
+    batches = torch.from_numpy(sequences)
+    batches = rearrange(batches, 'b t h w c -> b c t h w').float()
+    batches = batches / 255.0
+
+    mean = torch.as_tensor(cfg.DATA.MEAN, dtype=batches.dtype, device=batches.device)
+    std = torch.as_tensor(cfg.DATA.STD, dtype=batches.dtype, device=batches.device)
+
+    # subsample
+    batches = batches[::cfg.DEMO.SUBSAMPLE, :, :, :, :]
+
+    res = []
     with torch.no_grad():
-    # predict
-        res = []
-        for batch in tqdm.tqdm(batches):
-            batch = torch.from_numpy(batch)
-            batch = batch.permute(0, 4, 1, 2, 3)
-            batch = batch.float()
-            batch = batch / 255
-            mean = torch.as_tensor(cfg.DATA.MEAN, dtype=batch.dtype, device=batch.device)
-            std = torch.as_tensor(cfg.DATA.STD, dtype=batch.dtype, device=batch.device)
+        for i in tqdm.tqdm(range(0, len(batches), BATCH_SIZE)):
+            print(i)
+            batch = batches[i:i + BATCH_SIZE]
             batch.sub_(mean[:, None, None, None]).div_(std[:, None, None, None])
             batch = batch.to('cuda')
             out = model([batch])
-            out = out.cpu()
-            out = out.numpy()
             res.append(out)
 
-    res = np.concatenate(res, axis=0)
-
+    res = torch.cat(res, dim=0)
     return res
-
 
 def demo(cfg):
     """
@@ -163,17 +161,16 @@ def demo(cfg):
                 image_init=False,
             )
 
-            results = {}
+            output_directory = cfg.DEMO.OUTPUT_FILE
+            if not os.path.exists(output_directory):
+                os.makedirs(output_directory)
             for video in tqdm.tqdm(all_videos):
                 print('VIDEO: ', video)
                 frame_provider = VideoManager(cfg, input_video=video, seq_length=cfg.DEMO.CLIP_LENGTH)
                 video_res = run_demo(cfg, frame_provider, model)
-                results[video.split('/')[-1].split('.mp4')[0]] = video_res
-            # results = np.concatenate(results, axis=0)
-            output_directory = os.path.split(cfg.DEMO.OUTPUT_FILE)[0]
-            if not os.path.exists(output_directory):
-                os.makedirs(output_directory)
-            np.save(cfg.DEMO.OUTPUT_FILE, results, allow_pickle=True)
+                video_name = video.split('/')[-1].split('.mp4')[0]
+                res_path = os.path.join(cfg.DEMO.OUTPUT_FILE, video_name + '.npy')
+                np.save(res_path, video_res.detach().cpu().numpy())
         else:
             if cfg.DEMO.THREAD_ENABLE:
                 frame_provider = ThreadVideoManager(cfg)
