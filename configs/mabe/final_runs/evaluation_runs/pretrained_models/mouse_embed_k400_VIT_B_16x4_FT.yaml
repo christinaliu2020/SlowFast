@@ -95,7 +95,7 @@ DEMO:
   INPUT_VIDEOS: /root/submission_videos_mp4/
   THREAD_ENABLE: False
   BATCH_SIZE: 256
-  OUTPUT_FILE: /root/MAE_pretrained_results_mouse.npy
+  OUTPUT_FILE: /root/MAE_pretrained_results_mouse
   CHECKPOINT_FILE_PATH: /root/pretrained_models/VIT_B_16x4_MAE_PT.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ()
   CHECKPOINT_TYPE: pytorch
