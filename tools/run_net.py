@@ -13,6 +13,10 @@ from test_net import test
 from train_net import train
 from visualization import visualize
 
+# import os
+# os.environ["WANDB_MODE"] = "offline"
+import torch
+torch.backends.cudnn.benchmark = True
 
 def main():
     """
