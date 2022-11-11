@@ -101,8 +101,8 @@ def run_demo(cfg, frame_provider, model):
     batches = rearrange(batches, 'b t h w c -> b c t h w').float()
     batches = batches / 255.0
 
-    mean = torch.as_tensor(cfg.DATA.MEAN, dtype=batches.dtype, device=batches.device)
-    std = torch.as_tensor(cfg.DATA.STD, dtype=batches.dtype, device=batches.device)
+    mean = torch.as_tensor(cfg.DATA.MEAN, dtype=batches.dtype, device='cuda')
+    std = torch.as_tensor(cfg.DATA.STD, dtype=batches.dtype, device='cuda')
 
     # subsample
     batches = batches[::cfg.DEMO.SUBSAMPLE, :, :, :, :]
