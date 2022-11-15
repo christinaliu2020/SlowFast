@@ -10,6 +10,8 @@ import torch
 import tqdm
 from einops import rearrange
 
+import torch.nn.functional as F
+
 from slowfast.models import build_model
 from slowfast.utils import logging
 from slowfast.utils.checkpoint import load_checkpoint
@@ -114,6 +116,9 @@ def run_demo(cfg, frame_provider, model):
             batch = batches[i:i + BATCH_SIZE]
             batch = batch.to('cuda')
             batch.sub_(mean[:, None, None, None]).div_(std[:, None, None, None])
+            if batch.shape[-1] < 224:
+                diff = (0,0,0,224-batch.shape[-2],224-batch.shape[-1])
+                batch = F.pad(batch, diff, "constant", 0)
             out = model([batch])
             res.append(out)
 
