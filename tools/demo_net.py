@@ -117,8 +117,8 @@ def run_demo(cfg, frame_provider, model):
             batch = batch.to('cuda')
             batch.sub_(mean[:, None, None, None]).div_(std[:, None, None, None])
             if batch.shape[-1] < 224:
-                diff1 = 224-batch.shape[-1]//2
-                diff2 = 224-batch.shape[-2]//2
+                diff1 = (224-batch.shape[-1])//2
+                diff2 = (224-batch.shape[-2])//2
                 batch = F.pad(batch, (diff1,diff1,diff2,diff2), "constant", 0)
                 print(batch.shape)
             out = model([batch])
