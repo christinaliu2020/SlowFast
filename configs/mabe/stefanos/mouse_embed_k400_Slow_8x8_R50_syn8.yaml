@@ -68,7 +68,7 @@ DEMO:
   ENABLE: True
   INPUT_VIDEOS: /root/all_behaviors/
   THREAD_ENABLE: False
-  BATCH_SIZE: 64
+  BATCH_SIZE: 32
   OUTPUT_FILE: /root/results_stefanos_byol
   CHECKPOINT_FILE_PATH: /root/pretrained_models/BYOL_SlowR50_8x8_T4_epoch_00200.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ("backbone.",)
