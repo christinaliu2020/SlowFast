@@ -2,7 +2,7 @@ TASK: ssl_eval_k400
 TRAIN:
   ENABLE: False
   DATASET: kinetics
-  BATCH_SIZE: 1
+  BATCH_SIZE: 2
   EVAL_PERIOD: 20
   CHECKPOINT_PERIOD: 20
   AUTO_RESUME: False
