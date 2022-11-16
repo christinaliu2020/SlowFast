@@ -20,8 +20,8 @@ DATA:
   TRAIN_JITTER_SCALES_RELATIVE: [0.5, 1.0]
   TRAIN_JITTER_ASPECT_RELATIVE: [0.75, 1.3333]
   TRAIN_CROP_NUM_TEMPORAL: 1  # default 1
-  PATH_TO_DATA_DIR: /root/userTrain_splitted_full
-  PATH_PREFIX: /root/userTrain_splitted_full
+  PATH_TO_DATA_DIR: /root/
+  PATH_PREFIX: /root/
 MVIT:
   ZERO_DECAY_POS_CLS: False
   SEP_POS_EMBED: True # default: False needs to be false for fixed sincos
