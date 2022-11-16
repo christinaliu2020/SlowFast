@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 import os
+import subprocess
 
 import numpy as np
 import time
@@ -175,7 +176,10 @@ def demo(cfg):
                 os.makedirs(output_directory)
             for video in tqdm.tqdm(all_videos):
                 print('VIDEO: ', video)
-                frame_provider = VideoManager(cfg, input_video=video, seq_length=cfg.DEMO.CLIP_LENGTH)
+                shell_cmd = "ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -of csv=p=0 {}".format(video)
+                num_frames = int(subprocess.check_output(shell_cmd, shell=True))
+                print('NUM FRAMES: ', num_frames)
+                frame_provider = VideoManager(cfg, input_video=video, seq_length=num_frames)
                 video_res = run_demo(cfg, frame_provider, model)
                 video_name = video.split('/')[-1].split('.mp4')[0]
                 res_path = os.path.join(cfg.DEMO.OUTPUT_FILE, video_name + '.npy')
