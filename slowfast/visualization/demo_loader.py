@@ -156,19 +156,17 @@ class ThreadVideoManager:
     using multithreading for read and write frames.
     """
 
-    def __init__(self, cfg):
+    def __init__(self, cfg, input_video=None, seq_length=None):
         """
         Args:
             cfg (CfgNode): configs. Details can be found in
             slowfast/config/defaults.py
         """
         assert (
-            cfg.DEMO.WEBCAM > -1 or cfg.DEMO.INPUT_VIDEO != ""
+            cfg.DEMO.WEBCAM > -1 or cfg.DEMO.INPUT_VIDEO != "" or input_video is not None
         ), "Must specify a data source as input."
 
-        self.source = (
-            cfg.DEMO.WEBCAM if cfg.DEMO.WEBCAM > -1 else cfg.DEMO.INPUT_VIDEO
-        )
+        self.source = input_video
 
         self.display_width = cfg.DEMO.DISPLAY_WIDTH
         self.display_height = cfg.DEMO.DISPLAY_HEIGHT
