@@ -52,11 +52,11 @@ def run_demo(cfg, frame_provider, model):
         else None
     )
 
-    sequence_length = cfg.DATA.NUM_FRAMES
+    # sequence_length = cfg.DATA.NUM_FRAMES
 
-    assert (
-        cfg.DEMO.BUFFER_SIZE <= sequence_length // 2
-    ), "Buffer size cannot be greater than half of sequence length."
+    # assert (
+    #     cfg.DEMO.BUFFER_SIZE <= sequence_length // 2
+    # ), "Buffer size cannot be greater than half of sequence length."
     num_task = 0
     # Start reading frames.
     frame_provider.start()
@@ -77,6 +77,8 @@ def run_demo(cfg, frame_provider, model):
         res_frames.append(task.frames)
 
     res_frames = res_frames[0]
+
+    sequence_length = len(res_frames)
 
     #TODO: check frame widening
     sequences = []
