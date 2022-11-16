@@ -86,7 +86,7 @@ TEST:
 DATA_LOADER:
   NUM_WORKERS: 4
   PIN_MEMORY: True
-NUM_GPUS: 2
+NUM_GPUS: 4
 NUM_SHARDS: 1
 RNG_SEED: 0
 OUTPUT_DIR: /home/markus/Desktop/ssl_tests/byol_demo_linear/
@@ -94,7 +94,7 @@ DEMO:
   ENABLE: True
   INPUT_VIDEOS: /root/all_behaviors/
   THREAD_ENABLE: False
-  BATCH_SIZE: 64
+  BATCH_SIZE: 128
   OUTPUT_FILE: /root/results_stefanos_MAE
   CHECKPOINT_FILE_PATH: /root/pretrained_models/VIT_B_16x4_MAE_PT.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ()
