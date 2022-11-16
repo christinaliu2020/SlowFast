@@ -93,7 +93,7 @@ def run_demo(cfg, frame_provider, model):
             elif seq[seq_idx] >= len(res_frames):
                 seq[seq_idx] = len(res_frames) - 1
         sequence = res_frames[seq]
-        sequence = np.array(sequence)
+        sequence = np.array(sequence, dtype='uint8')
         if len(sequence) < sequence_length:
             sequence = np.pad(sequence, ((0, sequence_length - len(sequence)), (0, 0), (0, 0), (0, 0)), 'constant')
         sequences.append(sequence)
