@@ -7,6 +7,8 @@ import numpy as np
 import os
 import pickle
 import torch
+from pytorchvideo.data.dataset_manifest_utils import VideoDataset
+
 import wandb
 
 import slowfast.utils.checkpoint as cu
@@ -50,6 +52,7 @@ def perform_test(test_loader, model, test_meter, cfg, writer=None):
     for cur_iter, (inputs, labels, video_idx, time, meta) in enumerate(
         test_loader
     ):
+        print("cur_iter: ", cur_iter)
 
         if cfg.NUM_GPUS:
             # Transfer the data to the current GPU device.
@@ -127,6 +130,15 @@ def perform_test(test_loader, model, test_meter, cfg, writer=None):
             labels = labels.cpu()
             video_idx = video_idx.cpu()
 
+        if cfg.EMBEDDING.ENABLE:
+            preds = preds.detach().cpu() if cfg.NUM_GPUS else preds.detach()
+            if cfg.NUM_GPUS > 1:
+                preds = torch.cat(du.all_gather_unaligned(preds), dim=0)
+            test_meter.iter_toc()
+            # Update and log stats.
+            test_meter.update_stats(preds, labels, video_idx)
+            test_meter.log_iter_stats(None, cur_iter)
+
         test_meter.iter_toc()
 
         if not cfg.VIS_MASK.ENABLE:
@@ -177,7 +189,6 @@ def test(cfg):
     torch.manual_seed(cfg.RNG_SEED)
     wandb.init(
         project="Mabe_submission_runs",
-        entity="maggu",
         # settings=wandb.Settings(start_method="thread"),
         # save_code=True,
         config=cfg,
@@ -187,6 +198,144 @@ def test(cfg):
         reinit=True,
         # resume="must" if args["load_from_wandb"] is not None else False,
     )
+
+    # Setup logging format.
+    logging.setup_logging(cfg.OUTPUT_DIR)
+
+    if len(cfg.TEST.NUM_TEMPORAL_CLIPS) == 0:
+        cfg.TEST.NUM_TEMPORAL_CLIPS = [cfg.TEST.NUM_ENSEMBLE_VIEWS]
+
+    test_meters = []
+    for num_view in cfg.TEST.NUM_TEMPORAL_CLIPS:
+
+        cfg.TEST.NUM_ENSEMBLE_VIEWS = num_view
+
+        # Print config.
+        logger.info("Test with config:")
+        logger.info(cfg)
+
+        # Build the video model and print model statistics.
+        model = build_model(cfg)
+        flops, params = 0.0, 0.0
+        if du.is_master_proc() and cfg.LOG_MODEL_INFO:
+            model.eval()
+            flops, params = misc.log_model_info(
+                model, cfg, use_train_input=False
+            )
+
+        if du.is_master_proc() and cfg.LOG_MODEL_INFO:
+            misc.log_model_info(model, cfg, use_train_input=False)
+        if (
+            cfg.TASK == "ssl"
+            and cfg.MODEL.MODEL_NAME == "ContrastiveModel"
+            and cfg.CONTRASTIVE.KNN_ON
+        ):
+            train_loader = loader.construct_loader(cfg, "train")
+            if hasattr(model, "module"):
+                model.module.init_knn_labels(train_loader)
+            else:
+                model.init_knn_labels(train_loader)
+
+        cu.load_test_checkpoint(cfg, model)
+
+        # Create video testing loaders.
+        test_loader = loader.construct_loader(cfg, "test")
+        logger.info("Testing model for {} iterations".format(len(test_loader)))
+
+        if cfg.DETECTION.ENABLE:
+            assert cfg.NUM_GPUS == cfg.TEST.BATCH_SIZE or cfg.NUM_GPUS == 0
+            test_meter = AVAMeter(len(test_loader), cfg, mode="test")
+        else:
+            assert (
+                test_loader.dataset.num_videos
+                % (cfg.TEST.NUM_ENSEMBLE_VIEWS * cfg.TEST.NUM_SPATIAL_CROPS)
+                == 0
+            )
+            # Create meters for multi-view testing.
+            test_meter = TestMeter(
+                test_loader.dataset.num_videos
+                // (cfg.TEST.NUM_ENSEMBLE_VIEWS * cfg.TEST.NUM_SPATIAL_CROPS),
+                cfg.TEST.NUM_ENSEMBLE_VIEWS * cfg.TEST.NUM_SPATIAL_CROPS,
+                cfg.MODEL.NUM_CLASSES
+                if not cfg.TASK == "ssl"
+                else cfg.CONTRASTIVE.NUM_CLASSES_DOWNSTREAM,
+                len(test_loader),
+                cfg.DATA.MULTI_LABEL,
+                cfg.DATA.ENSEMBLE_METHOD,
+            )
+
+        if cfg.EMBEDDING.ENABLE:
+            model.head.projection = torch.nn.Identity()
+            model.head.act = torch.nn.Identity()
+
+        # Set up writer for logging to Tensorboard format.
+        if cfg.TENSORBOARD.ENABLE and du.is_master_proc(
+            cfg.NUM_GPUS * cfg.NUM_SHARDS
+        ):
+            writer = tb.TensorboardWriter(cfg)
+        else:
+            writer = None
+
+        # # Perform multi-view test on the entire dataset.
+        test_meter = perform_test(test_loader, model, test_meter, cfg, writer)
+        test_meters.append(test_meter)
+        if writer is not None:
+            writer.close()
+
+    result_string_views = "_p{:.2f}_f{:.2f}".format(params / 1e6, flops)
+
+    for view, test_meter in zip(cfg.TEST.NUM_TEMPORAL_CLIPS, test_meters):
+        logger.info(
+            "Finalized testing with {} temporal clips and {} spatial crops".format(
+                view, cfg.TEST.NUM_SPATIAL_CROPS
+            )
+        )
+        result_string_views += "_{}a{}" "".format(
+            view, test_meter.stats["top1_acc"]
+        )
+
+        result_string = (
+            "_p{:.2f}_f{:.2f}_{}a{} Top5 Acc: {} MEM: {:.2f} f: {:.4f}"
+            "".format(
+                params / 1e6,
+                flops,
+                view,
+                test_meter.stats["top1_acc"],
+                test_meter.stats["top5_acc"],
+                misc.gpu_mem_usage(),
+                flops,
+            )
+        )
+        wandb.log({"test": test_meter.stats["top1_acc"]})
+        wandb.log({"test": test_meter.stats["top5_acc"]})
+        wandb.log({"flow": flops})
+        wandb.log({"params": params / 1e6})
+        wandb.log({"mem": misc.gpu_mem_usage()})
+        wandb.log({"view": view})
+
+        logger.info("{}".format(result_string))
+    logger.info("{}".format(result_string_views))
+    return result_string + " \n " + result_string_views
+
+@torch.no_grad()
+def embedding(cfg):
+
+    # Set up environment.
+    du.init_distributed_training(cfg)
+    # Set random seed from configs.
+    np.random.seed(cfg.RNG_SEED)
+    torch.manual_seed(cfg.RNG_SEED)
+    # wandb.init(
+    #     project="Mabe_submission_runs",
+    #     # settings=wandb.Settings(start_method="thread"),
+    #     # save_code=True,
+    #     config=cfg,
+    #     # id=args["load_from_wandb"] if args["load_from_wandb"] is not None else None,
+    #     name=cfg.name,
+    #     group=cfg.name,
+    #     reinit=True,
+    #     # resume="must" if args["load_from_wandb"] is not None else False,
+    # )
 
     # Setup logging format.
     logging.setup_logging(cfg.OUTPUT_DIR)
@@ -301,54 +450,6 @@ def test(cfg):
         logger.info("{}".format(result_string))
     logger.info("{}".format(result_string_views))
     return result_string + " \n " + result_string_views
-
-@torch.no_grad()
-def extract_features_for_video(cfg, model, video_loader, video_idx, num_videos):
-    """
-    Extract features for a single video.
-    Args:
-        cfg (CfgNode): configs. Details can be found in
-            slowfast/config/defaults.py
-        model (nn.Module): model to be tested.
-        video_loader (DataLoader): video loader.
-        video_idx (int): index of the video.
-        num_videos (int): total number of videos.
-    Returns:
-        list: list of features for the video.
-    """
-    # Perform the forward pass.
-    model.eval()
-    features = []
-    for cur_iter, (inputs, _, _, _) in enumerate(video_loader):
-        inputs = inputs.cuda(non_blocking=True)
-        if cfg.DETECTION.ENABLE:
-            inputs = inputs.view(
-                inputs.size(0) * inputs.size(1),
-                inputs.size(2),
-                inputs.size(3),
-                inputs.size(4),
-            )
-        # Compute the predictions.
-        preds = model(inputs)
-        if cfg.DETECTION.ENABLE:
-            preds = preds.view(
-                cfg.TEST.BATCH_SIZE, cfg.DETECTION.NUM_FRAMES, -1
-            )
-        # Append the predictions.
-        features.append(preds.cpu())
-        # Log the testing progress.
-        if cur_iter % cfg.LOG_PERIOD == 0:
-            misc.log_iter_stats(
-                "test",
-                cur_iter,
-                len(video_loader),
-                {"top1_acc": 0.0, "top5_acc": 0.0},
-                video_idx,
-                num_videos,
-            )
-    # Concatenate the predictions.
-    features = torch.cat(features, dim=0)
-    return features
 
 if __name__ == "__main__":
 
