@@ -23,7 +23,7 @@ setup(
         "opencv-python",
         "pandas",
         "torchvision",
-        "pillow",
+        "pillow", #changed from PIL
         "scikit-learn",
         "tensorboard",
         "fairscale",
