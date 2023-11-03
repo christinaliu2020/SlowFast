@@ -4,9 +4,9 @@ import json
 import os
 
 # path to videos
-VIDEO_PATH = "/home/markus/Desktop/mabe_data/class1"
+VIDEO_PATH = "dataset/task1_videos_mp4/train"
 # path to csv file
-CSV_PATH = "/home/markus/Desktop/mabe_data/train.csv"
+CSV_PATH = "dataset/train.csv"
 
 # create csv file for custom dataset as follows
 
