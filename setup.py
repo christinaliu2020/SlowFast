@@ -22,7 +22,7 @@ setup(
         "detectron2",
         "opencv-python",
         "pandas",
-        "torchvision>=0.4.2",
+        "torchvision",
         "PIL",
         "scikit-learn",
         "tensorboard",
