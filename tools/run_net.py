@@ -4,9 +4,9 @@
 """Wrapper to train and test a video classification model."""
 import wandb
 
-from SlowFast.slowfast.config.defaults import assert_and_infer_cfg
-from SlowFast.slowfast.utils.misc import launch_job
-from SlowFast.slowfast.utils.parser import load_config, parse_args
+from root.slowfast.config.defaults import assert_and_infer_cfg
+from root.slowfast.utils.misc import launch_job
+from root.slowfast.utils.parser import load_config, parse_args
 
 from demo_net import demo
 from test_net import test
