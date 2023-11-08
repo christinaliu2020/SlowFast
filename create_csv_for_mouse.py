@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import os
 
-root_Path = "/root/"
+root_Path = "/SlowFast/"
 PATH_to_videos =  "/SlowFast/dataset"
 
 # results paths
