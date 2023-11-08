@@ -4,7 +4,7 @@ import json
 import os
 
 root_Path = "/SlowFast/"
-PATH_to_videos =  "/SlowFast/dataset"
+PATH_to_videos =  "/SlowFast/dataset/train"
 
 # results paths
 PATH_to_classInd = root_Path + "classInd.json"
