@@ -17,8 +17,8 @@ DATA:
   INPUT_CHANNEL_NUM: [3]
   TRAIN_JITTER_SCALES_RELATIVE: [0.08, 1.0]
   TRAIN_JITTER_ASPECT_RELATIVE: [0.75, 1.3333]
-  PATH_TO_DATA_DIR: /home/markus/PycharmProjects/contrast_MAE/MABe/mouse_data/
-  PATH_PREFIX: /home/markus/PycharmProjects/contrast_MAE/MABe/mouse_data/
+  PATH_TO_DATA_DIR:  SlowFast/dataset/task1_videos_mp4/train/
+  PATH_PREFIX: SlowFast/dataset/task1_videos_mp4/train/
   DECODING_BACKEND: pyav
 MVIT:
   ZERO_DECAY_POS_CLS: False
@@ -89,7 +89,7 @@ DATA_LOADER:
 NUM_GPUS: 4
 NUM_SHARDS: 1
 RNG_SEED: 0
-OUTPUT_DIR: /home/markus/Desktop/ssl_tests/byol_demo_linear/
+OUTPUT_DIR: SlowFast/ssl_tests
 DEMO:
   ENABLE: True
   INPUT_VIDEOS: /root/submission_videos_mp4/
