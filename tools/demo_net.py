@@ -71,6 +71,7 @@ def run_demo(cfg, frame_provider, model):
             print('not able to read')
             break
         if task is None:
+            print("aaaaaaaaaaaaaaaa")
             time.sleep(0.02)
             continue
         num_task += 1
