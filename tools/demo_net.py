@@ -68,6 +68,7 @@ def run_demo(cfg, frame_provider, model):
     for able_to_read, task in frame_provider:
         print('jo')
         if not able_to_read:
+            print('not able to read')
             break
         if task is None:
             time.sleep(0.02)
