@@ -4,7 +4,7 @@ TRAIN:
   BATCH_SIZE: 64
   EVAL_PERIOD: 10
   CHECKPOINT_PERIOD: 1
-  CHECKPOINT_FILE_PATH: /root/pretrained_models/VIT_B_16x4_MAE_PT.pyth #added 
+  #CHECKPOINT_FILE_PATH: /root/pretrained_models/VIT_B_16x4_MAE_PT.pyth #added 
   AUTO_RESUME: True
 DATA:
   NUM_FRAMES: 8
