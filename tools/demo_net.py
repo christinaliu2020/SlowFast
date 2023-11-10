@@ -64,7 +64,7 @@ def run_demo(cfg, frame_provider, model):
 
     BATCH_SIZE = cfg.DEMO.BATCH_SIZE
     res_frames = []
-
+    print("length of frame provider", frame_provider)
     for able_to_read, task in frame_provider:
         print('jo')
         if not able_to_read:
@@ -75,12 +75,12 @@ def run_demo(cfg, frame_provider, model):
             time.sleep(0.02)
             continue
         num_task += 1
-        
+        print("bbb")
         task.frames = np.array(task.frames)
         res_frames.append(task.frames)
 
     res_frames = res_frames[0]
-    print("bbb")
+    
 
     #TODO: check frame widening
     sequences = []
