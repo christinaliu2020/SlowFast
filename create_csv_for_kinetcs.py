@@ -4,7 +4,7 @@ import json
 import os
 
 # path to videos
-VIDEO_PATH = "dataset/task1_videos_mp4/train"
+VIDEO_PATH = "dataset/task1_videos_mp4/train/"
 # path to csv file
 CSV_PATH = "dataset/train.csv"
 
