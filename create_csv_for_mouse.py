@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import os
 
-root_Path = "dataset/task1_videos_mp4/train/"
+root_Path = "dataset/"
 PATH_to_videos =  "dataset/task1_videos_mp4/train/"
 
 # results paths
