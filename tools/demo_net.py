@@ -183,6 +183,8 @@ def demo(cfg):
                 num_frames = int(subprocess.check_output(shell_cmd, shell=True))
                 print('NUM FRAMES: ', num_frames)
                 frame_provider = VideoManager(cfg, input_video=video, seq_length=num_frames)
+                print("video", video)
+                print("num frames: ", num_frames)
                 video_res = run_demo(cfg, frame_provider, model)
                 video_name = video.split('/')[-1].split('.mp4')[0]
                 res_path = os.path.join(cfg.DEMO.OUTPUT_FILE, video_name + '.npy')
