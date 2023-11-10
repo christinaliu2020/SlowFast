@@ -64,8 +64,10 @@ def run_demo(cfg, frame_provider, model):
 
     BATCH_SIZE = cfg.DEMO.BATCH_SIZE
     res_frames = []
-    print("length of frame provider", frame_provider)
+    print("length of frame provider", len(frame_provider))
     for able_to_read, task in frame_provider:
+        print(able_to_read)
+        print(task)
         print('jo')
         if not able_to_read:
             print('not able to read')
