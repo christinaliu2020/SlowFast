@@ -235,6 +235,8 @@ class ThreadVideoManager:
         Grabbing frames from VideoCapture.
         """
         was_read = True
+
+        print("test")
         while was_read and not self.stopped:
             task = TaskInfo()
 
