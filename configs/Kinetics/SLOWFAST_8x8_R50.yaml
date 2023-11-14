@@ -1,7 +1,7 @@
 TRAIN:
-  ENABLE: True
+  ENABLE: False #changed from True for inference 
   DATASET: kinetics
-  BATCH_SIZE: 64
+  BATCH_SIZE: 16 #changed from 64 for gpu memory err
   EVAL_PERIOD: 10
   CHECKPOINT_PERIOD: 1
   AUTO_RESUME: True
@@ -56,7 +56,7 @@ TEST:
 DATA_LOADER:
   NUM_WORKERS: 8
   PIN_MEMORY: True
-NUM_GPUS: 8
+NUM_GPUS: 1 #changed from 8
 NUM_SHARDS: 1
 RNG_SEED: 0
 OUTPUT_DIR: .
