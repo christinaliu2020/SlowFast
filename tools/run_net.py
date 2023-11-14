@@ -31,10 +31,12 @@ def main():
         cfg.name = path_to_config.split('/')[-1]
         # Perform training.
         if cfg.TRAIN.ENABLE:
+            print("train enable")
             launch_job(cfg=cfg, init_method=args.init_method, func=train)
 
         # Perform multi-clip testing.
         if cfg.TEST.ENABLE:
+            print("test enable")
             if cfg.TEST.NUM_ENSEMBLE_VIEWS == -1:
                 num_view_list = [1, 3, 5, 7, 10]
                 for num_view in num_view_list:
