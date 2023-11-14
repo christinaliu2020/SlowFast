@@ -729,7 +729,7 @@ _C.DATA.TARGET_FPS = 30
 _C.DATA.TRAIN_JITTER_FPS = 0.0
 
 # Decoding backend, options include `pyav` or `torchvision`
-_C.DATA.DECODING_BACKEND = "torchvision"
+_C.DATA.DECODING_BACKEND = "pyav" #changed from torchvision
 
 # Decoding resize to short size (set to native size for best speed)
 _C.DATA.DECODING_SHORT_SIZE = 256
