@@ -24,8 +24,8 @@ def main():
     """
     args = parse_args()
     print("config files: {}".format(args.cfg_files))
-    print("data path", DATA.PATH_TO_DATA_DIR)
     for path_to_config in args.cfg_files:
+        print("path", path_to_config)
         cfg = load_config(args, path_to_config)
         cfg = assert_and_infer_cfg(cfg)
 
