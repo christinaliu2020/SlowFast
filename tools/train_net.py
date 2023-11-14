@@ -155,7 +155,9 @@ def train_epoch(
         loss_extra = None
         if isinstance(loss, (list, tuple)):
             loss, loss_extra = loss
+            print("isinstance")
 
+        print("losses: ", loss)
         # check Nan Loss.
         misc.check_nan_losses(loss)
         if perform_backward:
