@@ -150,6 +150,7 @@ def train_epoch(
             else:
                 # Compute the loss.
                 loss = loss_fun(preds, labels)
+                print("computes loss")
 
         loss_extra = None
         if isinstance(loss, (list, tuple)):
