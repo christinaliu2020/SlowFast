@@ -54,6 +54,7 @@ TEST:
   ENABLE: True
   DATASET: kinetics
   BATCH_SIZE: 64
+  CHECKPOINT_FILE_PATH: /root/pretrained_models/VIT_B_16x4_MAE_PT.pyth
 DATA_LOADER:
   NUM_WORKERS: 8
   PIN_MEMORY: True
