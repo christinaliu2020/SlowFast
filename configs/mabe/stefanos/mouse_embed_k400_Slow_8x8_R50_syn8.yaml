@@ -66,7 +66,7 @@ OUTPUT_DIR: /home/markus/Desktop/ssl_tests/byol_demo_linear/
 #  PATH_TO_FRAME_MAP: /home/markus/PycharmProjects/mabe-2022-public-evaluator/round2/metadata/mouse_round2_frame_number_map.npy
 DEMO:
   ENABLE: True
-  INPUT_VIDEOS: /root/all_behaviors/
+  INPUT_VIDEOS: dataset/task1_videos_mp4/train/
   THREAD_ENABLE: False
   BATCH_SIZE: 128
   OUTPUT_FILE: /root/results_stefanos_byol
