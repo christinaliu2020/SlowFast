@@ -103,7 +103,7 @@ def run_demo(cfg, frame_provider, model):
             sequence = np.pad(sequence, ((0, sequence_length - len(sequence)), (0, 0), (0, 0), (0, 0)), 'constant')
         sequences.append(sequence)
         print(frame_idx)
-
+    print("done iterating")
     sequences = np.array(sequences)
 
 
@@ -116,7 +116,7 @@ def run_demo(cfg, frame_provider, model):
 
     # subsample
     batches = batches[::cfg.DEMO.SUBSAMPLE, :, :, :, :]
-
+    print("subsample")
     res = []
     with torch.no_grad():
         for i in tqdm.tqdm(range(0, len(batches), BATCH_SIZE)):
@@ -131,7 +131,7 @@ def run_demo(cfg, frame_provider, model):
                 print(batch.shape)
             out = model([batch])
             res.append(out)
-
+    print("done iterating thorugh tqdm")
     res = torch.cat(res, dim=0)
     return res
 
