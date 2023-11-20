@@ -69,7 +69,7 @@ DEMO:
   INPUT_VIDEOS: dataset/task1_videos_mp4/train/
   THREAD_ENABLE: False
   BATCH_SIZE: 128
-  OUTPUT_FILE: /root/results_stefanos_byol
+  OUTPUT_FILE: /root/results_stefanos_byol.mp4
   CHECKPOINT_FILE_PATH: /root/pretrained_models/BYOL_SlowR50_8x8_T4_epoch_00200.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ("backbone.",)
   CHECKPOINT_TYPE: pytorch
