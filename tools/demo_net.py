@@ -87,6 +87,7 @@ def run_demo(cfg, frame_provider, model):
     #TODO: check frame widening
     sequences = []
     sample_rate = cfg.DATA.SAMPLING_RATE
+    print("start")
     for frame_idx, frame in enumerate(res_frames):
         # start_idx = max(0, frame_idx - sequence_length // 2)
         # end_idx = min(len(res_frames), frame_idx + sequence_length // 2)
@@ -101,6 +102,7 @@ def run_demo(cfg, frame_provider, model):
         if len(sequence) < sequence_length:
             sequence = np.pad(sequence, ((0, sequence_length - len(sequence)), (0, 0), (0, 0), (0, 0)), 'constant')
         sequences.append(sequence)
+        print(frame_idx)
 
     sequences = np.array(sequences)
 
