@@ -150,6 +150,7 @@ def demo(cfg):
         start = time.time()
 
         if cfg.DEMO.INPUT_VIDEOS != "":
+            print("if")
             all_videos = os.listdir(cfg.DEMO.INPUT_VIDEOS)
             all_videos = [os.path.join(cfg.DEMO.INPUT_VIDEOS, video) for video in all_videos]
 
@@ -192,6 +193,7 @@ def demo(cfg):
                 res_path = os.path.join(cfg.DEMO.OUTPUT_FILE, video_name + '.npy')
                 np.save(res_path, video_res.detach().cpu().numpy())
         else:
+            print("else")
             if cfg.DEMO.THREAD_ENABLE:
                 frame_provider = ThreadVideoManager(cfg)
             else:
