@@ -94,10 +94,10 @@ DEMO:
   ENABLE: True
   INPUT_VIDEOS: dataset/task1_videos_mp4/input/
   THREAD_ENABLE: False
-  BATCH_SIZE: 64 #changed from 256
+  BATCH_SIZE: 32 #changed from 256
   OUTPUT_FILE: /root/MAE_fromSelf_Cube_09_pretrained_results_mouse
   CHECKPOINT_FILE_PATH: /root/pretrained_models/Mouse_MAE_Cube_09_VIT_B_16x4_epoch_01000.pyth
   CHECKPOINT_CLEAR_NAME_PATTERN: ()
   CHECKPOINT_TYPE: pytorch
   CLIP_LENGTH: 1800
-  SUBSAMPLE: 5
+  SUBSAMPLE: 1 #changed from 5
