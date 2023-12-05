@@ -1193,6 +1193,12 @@ class MViT(nn.Module):
         if len(bcthw) == 4:  # Fix bcthw in case of 4D tensor
             bcthw.insert(2, torch.tensor(self.T))
         T, H, W = bcthw[-3], bcthw[-2], bcthw[-1]
+        print("T: ", T)
+        print("H: ", H)
+        print("W: ", W)
+        print("self T: ", self.T)
+        print("self H: ", self.H)
+        print("self W: ", self.W)
         assert len(bcthw) == 5 and (T, H, W) == (self.T, self.H, self.W), bcthw
         B, N, C = x.shape
 
