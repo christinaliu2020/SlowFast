@@ -835,6 +835,11 @@ class MViT(nn.Module):
         self.patch_stride = cfg.MVIT.PATCH_STRIDE
         if self.use_2d_patch:
             self.patch_stride = [1] + self.patch_stride
+
+        print("patch 0,", self.patch_stride[0])
+        print("patch 1,", self.patch_stride[1])
+        print("patch 2,", self.patch_stride[2])
+        
         self.T = cfg.DATA.NUM_FRAMES // self.patch_stride[0]
         self.H = cfg.DATA.TRAIN_CROP_SIZE // self.patch_stride[1]
         self.W = cfg.DATA.TRAIN_CROP_SIZE // self.patch_stride[2]
@@ -874,6 +879,7 @@ class MViT(nn.Module):
         )
 
         if cfg.MODEL.ACT_CHECKPOINT:
+            print("true")
             self.patch_embed = checkpoint_wrapper(self.patch_embed)
         self.input_dims = [temporal_size, spatial_size, spatial_size]
         assert self.input_dims[1] == self.input_dims[2]
@@ -1041,6 +1047,7 @@ class MViT(nn.Module):
                 )
 
                 if cfg.MODEL.ACT_CHECKPOINT:
+
                     attention_block = checkpoint_wrapper(attention_block)
                 self.blocks.append(attention_block)
                 if len(stride_q[i]) > 0:
