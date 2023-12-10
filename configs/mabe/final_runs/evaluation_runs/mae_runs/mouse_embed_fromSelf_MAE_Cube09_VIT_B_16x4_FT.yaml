@@ -100,4 +100,4 @@ DEMO:
   CHECKPOINT_CLEAR_NAME_PATTERN: ()
   CHECKPOINT_TYPE: pytorch
   CLIP_LENGTH: 1800
-  SUBSAMPLE: 1 #changed from 5
+  SUBSAMPLE: 5 #changed from 5
